@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, Phone, Star, ArrowRight, ShoppingBag, Plus } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
-import { CATEGORIES, MENU_ITEMS } from '../data/dummyMenuData';
+import { useMenu } from '../context/MenuContext';
 import { useCart } from '../context/CartContext';
 import CartWidget from '../components/CartWidget';
+import CustomizationModal from '../components/CustomizationModal';
+import { type MenuItem } from '../types/menu';
 
 const RATINGS: Record<string, number> = {
   'pizza-1': 4.9, 'pizza-2': 4.8, 'pizza-3': 4.9, 'pizza-4': 4.7,
@@ -13,10 +15,12 @@ const RATINGS: Record<string, number> = {
 
 export default function Menu() {
   const { cartItems, addToCart, incrementItem, decrementItem, cartTotalItems } = useCart();
+  const { categories, menuItems } = useMenu();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [customizingItem, setCustomizingItem] = useState<MenuItem | null>(null);
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
-  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
+  const [activeCategory, setActiveCategory] = useState(categories[0]?.id || '');
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -33,7 +37,7 @@ export default function Menu() {
   // Track active category on scroll
   useEffect(() => {
     const onScroll = () => {
-      for (const cat of [...CATEGORIES].reverse()) {
+      for (const cat of [...categories].reverse()) {
         const el = document.getElementById(cat.id);
         if (el && el.getBoundingClientRect().top <= 160) {
           setActiveCategory(cat.id);
@@ -55,6 +59,17 @@ export default function Menu() {
         onClose={() => setIsCartOpen(false)}
         onIncrement={incrementItem}
         onDecrement={decrementItem}
+      />
+
+      {/* Customization Modal */}
+      <CustomizationModal
+        item={customizingItem}
+        isOpen={!!customizingItem}
+        onClose={() => setCustomizingItem(null)}
+        onAddToCart={(item, customizations) => {
+          addToCart(item, customizations);
+          setIsCartOpen(true);
+        }}
       />
 
       {/* Menu Hero */}
@@ -79,7 +94,7 @@ export default function Menu() {
       {/* Sticky Category Nav */}
       <div className="sticky top-[68px] z-30 w-full bg-[#1a0a00]/95 backdrop-blur-md border-b border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
         <div className="container-custom flex items-center gap-2 py-4 overflow-x-auto hide-scroll">
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => {
@@ -130,7 +145,7 @@ export default function Menu() {
 
       {/* Menu Sections */}
       <div className="container-custom pt-16 pb-24 px-4" ref={menuRef}>
-        {CATEGORIES.map((category) => (
+        {categories.map((category) => (
           <div key={category.id} id={category.id} className="mb-28 scroll-mt-40">
 
             {/* Category heading */}
@@ -148,7 +163,7 @@ export default function Menu() {
 
             {/* Items grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {MENU_ITEMS.filter(item => item.categoryId === category.id).map((item) => (
+              {menuItems.filter(item => item.categoryId === category.id).map((item) => (
                 <div
                   key={item.id}
                   className="group relative bg-[#2b1200] rounded-[14px] border border-white/5 overflow-hidden flex flex-col hover:border-[#C0392B]/30 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-10px_rgba(192,57,43,0.25)] transition-all duration-400"
@@ -180,7 +195,14 @@ export default function Menu() {
                     <p className="font-inter text-[13px] text-white/40 leading-relaxed line-clamp-2 flex-grow">{item.description}</p>
 
                     <button
-                      onClick={() => { addToCart(item); setIsCartOpen(true); }}
+                      onClick={() => {
+                        if ((item.sizes && item.sizes.length > 0) || item.hasPizzaExtras || (item.toppings && item.toppings.length > 0)) {
+                          setCustomizingItem(item);
+                        } else {
+                          addToCart(item);
+                          setIsCartOpen(true);
+                        }
+                      }}
                       id={`menu-add-${item.id}`}
                       className="flex items-center justify-between bg-white/5 hover:bg-[#C0392B] border border-white/10 hover:border-[#C0392B] text-white font-barlow text-[13px] font-700 uppercase tracking-wider px-4 py-3 rounded-[8px] transition-all duration-300 group/btn mt-auto"
                     >

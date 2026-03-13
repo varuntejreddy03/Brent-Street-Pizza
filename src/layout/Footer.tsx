@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
               Ready to Order Direct?
             </h3>
             <p className="font-inter text-white/40 text-[13px] mt-1">
-              Get free garlic bread + earn loyalty points. No app fees ever.
+              Get free garlic bread on direct orders. No app fees ever.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col gap-4">
             <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-white/25 mb-2">SMS Updates</h4>
             <p className="font-inter text-[13px] text-white/35 leading-relaxed">
-              Get exclusive deals, daily specials and loyalty rewards via SMS.
+              Get exclusive deals and daily specials via SMS.
             </p>
             {!smsSubmitted ? (
               <form onSubmit={handleSmsSubmit} className="flex flex-col gap-2">
@@ -147,6 +147,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/contact" className="font-barlow text-[11px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase">Privacy Policy</Link>
             <Link to="/contact" className="font-barlow text-[11px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase">Terms of Service</Link>
+            <Link to="/admin" className="font-barlow text-[11px] text-[#C0392B]/50 hover:text-[#C0392B] transition-colors tracking-widest uppercase">Admin Login</Link>
             {/* Uber Eats — last resort fallback only */}
             <a
               href="https://www.ubereats.com"

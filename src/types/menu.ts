@@ -1,3 +1,14 @@
+export interface MenuSize {
+  name: string;
+  price: number;
+}
+
+export interface ExtraCategory {
+  id: string;
+  name: string;
+  options: { name: string; price: number }[];
+}
+
 export interface MenuItem {
   id: string;
   categoryId: string;
@@ -11,6 +22,9 @@ export interface MenuItem {
     isSpicy?: boolean;
     isFavorite?: boolean;
   };
+  sizes?: MenuSize[];
+  toppings?: string[];
+  hasPizzaExtras?: boolean;
 }
 
 export interface MenuCategory {
@@ -26,4 +40,7 @@ export interface CartItem {
   price: number;
   quantity: number;
   image: string;
+  size?: string;
+  removedToppings?: string[];
+  addedExtras?: { name: string; price: number }[];
 }

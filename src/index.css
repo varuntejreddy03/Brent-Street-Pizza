@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Poppins:wght@600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -16,6 +16,13 @@
   --font-bebas: "Bebas Neue", sans-serif;
   --font-inter: "Inter", sans-serif;
   --font-barlow: "Barlow Condensed", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+}
+
+@layer utilities {
+  .font-poppins {
+    font-family: var(--font-poppins);
+  }
 }
 
 @layer base {

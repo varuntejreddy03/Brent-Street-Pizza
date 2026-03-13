@@ -1,105 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, Pizza, Truck, ArrowRight } from 'lucide-react';
-
-
-const TrustBar: React.FC = () => (
-  <div className="flex flex-wrap items-center gap-x-8 gap-y-2 py-4 px-6 bg-white/5 backdrop-blur-sm border border-white/8 rounded-full mt-10 w-fit">
-    {[
-      { icon: <Star className="w-4 h-4 fill-[#d4a017] text-[#d4a017]" />, text: '4.9 Google Rating' },
-      { icon: <Pizza className="w-4 h-4 text-[#C0392B]" />, text: 'Hand-Stretched Daily' },
-      { icon: <Truck className="w-4 h-4 text-[#d4a017]" />, text: 'Fast Local Delivery' },
-    ].map(({ icon, text }) => (
-      <div key={text} className="flex items-center gap-2">
-        {icon}
-        <span className="font-barlow text-[13px] font-600 text-white/60">{text}</span>
-      </div>
-    ))}
-  </div>
-);
 
 const Hero: React.FC = () => {
 
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#1a0a00]">
-      {/* Video background */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover opacity-25"
-        src="https://cdn.coverr.co/videos/coverr-a-pizza-being-made-in-a-restaurant-4989/1080p.mp4"
-        autoPlay muted loop playsInline
-        poster="/heropic.jpeg"
-      />
-      {/* Fallback image */}
+      {/* Image background */}
       <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center opacity-35"
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ backgroundImage: 'url(/heropic.jpeg)' }}
       />
-      {/* Gradients */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1a0a00]/95 via-[#1a0a00]/75 to-[#1a0a00]/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a00] via-transparent to-[#1a0a00]/60" />
-      {/* Grain */}
-      <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`
-      }} />
-      {/* Decorative ring */}
-      <div className="absolute top-1/2 right-[5%] -translate-y-1/2 w-[500px] h-[500px] hidden xl:block pointer-events-none opacity-8">
-        <div className="w-full h-full rounded-full border-[2px] border-dashed border-[#d4a017] animate-spin-slow" />
-      </div>
+      {/* Subtle overlay for text readability */}
+      <div className="absolute inset-0 bg-black/40" />
+
 
       {/* Content */}
       <div className="relative z-10 container-custom flex flex-col justify-center pt-28 pb-20 min-h-screen">
-        <div className="max-w-[700px]">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#C0392B]/20 border border-[#C0392B]/40 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-[#C0392B] animate-pulse-glow" />
-            <span className="font-barlow text-[13px] font-600 uppercase tracking-[0.2em] text-white/80">Authentic Italian · Sydney</span>
-          </div>
 
+
+        <div className="max-w-[1200px] w-full">
           {/* Headline */}
-          <h3
-            className="font-barlow text-white/55 text-[18px] md:text-[22px] font-600 uppercase tracking-[0.3em] mb-1 animate-fade-up"
-            style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
-          >
-            HOT &amp; FRESH
-          </h3>
-          <h1
-            className="font-bebas text-[80px] md:text-[120px] lg:text-[150px] leading-[0.85] mb-4 text-white drop-shadow-2xl animate-fade-up"
-            style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
-          >
-            ORDER DIRECT<br />&amp; <span style={{ color: '#d4a017' }}>SAVE</span>
-          </h1>
-          <div className="w-20 h-[3px] bg-gradient-to-r from-[#d4a017] to-transparent mb-5 animate-fade-up" style={{ animationDelay: '0.25s', opacity: 0, animationFillMode: 'forwards' }} />
-          <p
-            className="font-inter text-white/55 text-[15px] md:text-[17px] font-light uppercase tracking-[0.15em] mb-10 animate-fade-up"
-            style={{ animationDelay: '0.3s', opacity: 0, animationFillMode: 'forwards' }}
-          >
-            Skip the apps — get free garlic bread on every direct order
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 animate-fade-up"
-            style={{ animationDelay: '0.4s', opacity: 0, animationFillMode: 'forwards' }}
-          >
-            <Link
-              to="/menu"
-              id="hero-order-pickup"
-              className="btn-primary text-[15px] px-8 py-4 w-full sm:w-auto justify-center"
+          <div className="flex flex-col items-center md:items-start pl-0 md:pl-[300px] lg:pl-[360px] text-center md:text-left mt-24">
+            <h3
+              className="font-poppins text-white text-[24px] md:text-[36px] font-700 uppercase tracking-wide mb-2 animate-fade-up drop-shadow-md"
+              style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              Order Pickup <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/menu"
-              id="hero-order-delivery"
-              className="btn-outline text-[15px] px-8 py-4 w-full sm:w-auto justify-center"
+              HOT &amp; FRESH
+            </h3>
+            <h1
+              className="font-poppins text-[70px] md:text-[110px] lg:text-[130px] font-900 leading-[0.95] mb-4 text-white drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)] uppercase animate-fade-up tracking-[-0.02em]"
+              style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              Order Delivery <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+              PIZZA
+            </h1>
+            <p
+              className="font-poppins text-white text-[20px] md:text-[28px] font-700 tracking-normal mb-10 animate-fade-up drop-shadow-md"
+              style={{ animationDelay: '0.3s', opacity: 0, animationFillMode: 'forwards' }}
+            >
+              Made Daily in Store
+            </p>
 
-          {/* Trust bar */}
-          <div className="animate-fade-up" style={{ animationDelay: '0.5s', opacity: 0, animationFillMode: 'forwards' }}>
-            <TrustBar />
+            {/* CTA Buttons */}
+            <div
+              className="flex justify-center md:justify-start items-center gap-3 sm:gap-4 md:gap-6 animate-fade-up w-full px-4 md:px-0"
+              style={{ animationDelay: '0.4s', opacity: 0, animationFillMode: 'forwards' }}
+            >
+              <Link
+                to="/menu"
+                id="hero-order-pickup"
+                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[15px] sm:text-[16px] md:text-[18px] tracking-widest px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 md:py-4 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 w-full sm:w-auto active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d,0_0px_0_rgba(0,0,0,0.5)] uppercase border border-[#f87171]/20"
+              >
+                ORDER PICKUP <span className="text-xl">›</span>
+              </Link>
+              <Link
+                to="/menu?tab=delivery"
+                id="hero-order-delivery"
+                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[15px] sm:text-[16px] md:text-[18px] tracking-widest px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 md:py-4 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 w-full sm:w-auto active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d,0_0px_0_rgba(0,0,0,0.5)] uppercase border border-[#f87171]/20"
+              >
+                ORDER DELIVERY <span className="text-xl">›</span>
+              </Link>
+            </div>
           </div>
         </div>
 

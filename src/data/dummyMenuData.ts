@@ -1,98 +1,125 @@
-import { type MenuCategory, type MenuItem } from '../types/menu';
+import { type MenuCategory, type MenuItem, type ExtraCategory } from '../types/menu';
+
+export const PIZZA_EXTRAS: ExtraCategory[] = [
+  {
+    id: 'sauce',
+    name: 'Sauce',
+    options: [
+      { name: 'BBQ Sauce', price: 1 },
+      { name: 'Garlic Aioli', price: 1 },
+      { name: 'Garlic Mayo', price: 1.50 },
+      { name: 'Peri-Peri Mayo', price: 1.50 },
+      { name: 'Peri-Peri Sauce', price: 1 },
+      { name: 'Pesto Mayo', price: 1 },
+      { name: 'Sour Cream', price: 1.50 },
+      { name: 'Spicy Mayo', price: 1.50 },
+      { name: 'Sweet Chilli Sauce', price: 1.50 },
+      { name: 'Tandoori Sauce', price: 1.50 },
+      { name: 'Tomato Sauce', price: 1.50 },
+      { name: 'Chilli Paste', price: 0 }
+    ]
+  },
+  {
+    id: 'cheese',
+    name: 'Cheese',
+    options: [
+      { name: 'Bocconcini', price: 1.50 },
+      { name: 'Cheese', price: 1.50 },
+      { name: 'Feta', price: 2.50 },
+      { name: 'Mozzarella', price: 2.50 },
+      { name: 'Tandoori Paneer', price: 1.50 },
+      { name: 'Vegan Cheese', price: 0 }
+    ]
+  },
+  {
+    id: 'veggies',
+    name: 'Veggies',
+    options: [
+      { name: 'Capsicum', price: 1.50 },
+      { name: 'Chilli', price: 1.50 },
+      { name: 'Garlic', price: 1.50 },
+      { name: 'Grilled Eggplant', price: 1.50 },
+      { name: 'Jalapenos', price: 1.50 },
+      { name: 'Kalamata Olives', price: 1.50 },
+      { name: 'Mushrooms', price: 1.50 },
+      { name: 'Olives', price: 1.50 },
+      { name: 'Onion', price: 1.50 },
+      { name: 'Pineapple', price: 1.50 },
+      { name: 'Spanish Onion', price: 1.50 },
+      { name: 'Spinach', price: 1.50 },
+      { name: 'Sundried Tomatoes', price: 1.50 },
+      { name: 'Sweet Corn', price: 1.50 },
+      { name: 'Tomato', price: 0 }
+    ]
+  },
+  {
+    id: 'meat',
+    name: 'Meat',
+    options: [
+      { name: 'Bacon', price: 3 },
+      { name: 'Beef', price: 3 },
+      { name: 'Braised Lamb', price: 5 },
+      { name: 'Chicken', price: 4 },
+      { name: 'Egg', price: 1.50 },
+      { name: 'Eye Bacon', price: 3 },
+      { name: 'Ground Beef', price: 1.50 },
+      { name: 'Ham', price: 3 },
+      { name: 'Hot Salami', price: 4 },
+      { name: 'Pepperoni', price: 1.50 },
+      { name: 'Salami', price: 1.50 },
+      { name: 'Virginia Leg Ham', price: 0 }
+    ]
+  },
+  {
+    id: 'seafood',
+    name: 'Seafood',
+    options: [
+      { name: 'Anchovies', price: 1.50 },
+      { name: 'Garlic Prawns', price: 1.50 },
+      { name: 'Mussel', price: 1.50 },
+      { name: 'Prawns', price: 4 },
+      { name: 'Smoked Salmon', price: 0 }
+    ]
+  },
+  {
+    id: 'garnish',
+    name: 'Garnish',
+    options: [
+      { name: 'Herbs', price: 0.25 },
+      { name: 'Lemon', price: 1.50 },
+      { name: 'Oregano', price: 0.25 },
+      { name: 'Parsley', price: 0.25 },
+      { name: 'Chili Flakes', price: 0.50 }
+    ]
+  }
+];
 
 export const CATEGORIES: MenuCategory[] = [
-  { id: 'cat-pizza', name: 'PIZZA', iconName: 'Pizza' },
-  { id: 'cat-gelato', name: 'GELATO', iconName: 'IceCream' },
-  { id: 'cat-desserts', name: 'DESERTS', iconName: 'CakeSlice' },
+  { id: 'cat-meal-deals', name: 'Meal Deals', iconName: 'Tag' },
+  { id: 'cat-classic-pizza', name: 'Classic Pizza', iconName: 'Pizza' },
+  { id: 'cat-meat-pizza', name: 'Meat Pizza', iconName: 'Beef' },
+  { id: 'cat-seafood-pizza', name: 'Seafood Pizza', iconName: 'Fish' },
+  { id: 'cat-chicken-pizza', name: 'Chicken Pizza', iconName: 'Drumstick' },
+  { id: 'cat-vegetarian-pizza', name: 'Vegetarian Pizza', iconName: 'Leaf' },
 ];
 
 export const MENU_ITEMS: MenuItem[] = [
-  // PIZZAS
   {
-    id: 'pizza-1',
-    categoryId: 'cat-pizza',
-    name: 'SUPREME',
-    description: 'Ham, pepperoni, mushrooms, capsicum, onions, olives, pineapple and mozzarella.',
-    price: 17.00,
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80',
-    tags: { isFavorite: true }
-  },
-  {
-    id: 'pizza-2',
-    categoryId: 'cat-pizza',
-    name: 'MARGHERITA',
-    description: 'Fresh basil, mozzarella, classic tomato sauce, and extra virgin olive oil.',
-    price: 15.00,
+    id: 'pizza-margherita',
+    categoryId: 'cat-classic-pizza',
+    name: 'Margherita',
+    description: 'Tomato Sauce, Cheese and Oregano',
+    price: 12.00,
+    sizes: [
+      { name: 'Small', price: 12 },
+      { name: 'Large', price: 15 },
+      { name: 'Family', price: 20 }
+    ],
+    toppings: ['Tomato Sauce', 'Cheese', 'Oregano'],
+    hasPizzaExtras: true,
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80',
     tags: { isFavorite: true }
-  },
-  {
-    id: 'pizza-3',
-    categoryId: 'cat-pizza',
-    name: 'PEPPERONI',
-    description: 'Double pepperoni, extra mozzarella, tomato sauce on a classic base.',
-    price: 16.00,
-    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80',
-    tags: { isFavorite: true }
-  },
-  {
-    id: 'pizza-4',
-    categoryId: 'cat-pizza',
-    name: 'HAWAIIAN',
-    description: 'Ham, pineapple pieces, mozzarella, and classic tomato sauce.',
-    price: 16.00,
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80',
-    tags: { isFavorite: true }
-  },
-
-  // GELATO
-  {
-    id: 'gelato-1',
-    categoryId: 'cat-gelato',
-    name: 'VANILLA BEAN',
-    description: 'Creamy traditional vanilla bean gelato made with Madagascar vanilla.',
-    price: 6.00,
-    image: 'https://media.istockphoto.com/id/503082763/photo/gelato-in-a-store-window.jpg?s=612x612&w=0&k=20&c=TkwBIPqSu4Q-BBVQjTxSpB4frO7Hd_tMSbJ8jpFIzRw=',
-    tags: {}
-  },
-  {
-    id: 'gelato-2',
-    categoryId: 'cat-gelato',
-    name: 'BELGIAN CHOCOLATE',
-    description: 'Rich, dark chocolate gelato crafted with 70% cocoa Belgian chocolate.',
-    price: 6.00,
-    image: 'https://media.istockphoto.com/id/503082763/photo/gelato-in-a-store-window.jpg?s=612x612&w=0&k=20&c=TkwBIPqSu4Q-BBVQjTxSpB4frO7Hd_tMSbJ8jpFIzRw=',
-    tags: {}
-  },
-  {
-    id: 'gelato-3',
-    categoryId: 'cat-gelato',
-    name: 'PISTACHIO',
-    description: 'Authentic Italian pistachio gelato with roasted nut pieces.',
-    price: 7.00,
-    image: 'https://media.istockphoto.com/id/503082763/photo/gelato-in-a-store-window.jpg?s=612x612&w=0&k=20&c=TkwBIPqSu4Q-BBVQjTxSpB4frO7Hd_tMSbJ8jpFIzRw=',
-    tags: {}
-  },
-
-  // DESERTS
-  {
-    id: 'dessert-1',
-    categoryId: 'cat-desserts',
-    name: 'TIRAMISU',
-    description: 'Classic Italian dessert with coffee-soaked ladyfingers and mascarpone.',
-    price: 9.00,
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80',
-    tags: {}
-  },
-  {
-    id: 'dessert-2',
-    categoryId: 'cat-desserts',
-    name: 'CHOCOLATE LAVA CAKE',
-    description: 'Warm chocolate cake with a molten center, served with a scoop of vanilla.',
-    price: 10.00,
-    image: 'https://images.unsplash.com/photo-1624353365286-3f8d62adda51?w=600&q=80',
-    tags: {}
-  },
+  }
 ];
 
 export const ADD_ONS: MenuItem[] = [];

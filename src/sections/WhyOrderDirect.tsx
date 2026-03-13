@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DollarSign, Zap, Gift, Phone, ArrowRight } from 'lucide-react';
+import { DollarSign, Zap, Phone, ArrowRight } from 'lucide-react';
 
 const reasons = [
   {
@@ -19,14 +19,7 @@ const reasons = [
     highlight: '10 min faster on average',
     color: '#C0392B',
   },
-  {
-    icon: Gift,
-    emoji: '🎁',
-    title: 'Earn Loyalty Points',
-    desc: 'Every direct order earns you points toward free pizza. Uber Eats orders earn nothing.',
-    highlight: '1 point per $1 spent',
-    color: '#d4a017',
-  },
+
   {
     icon: Phone,
     emoji: '📞',
@@ -83,7 +76,6 @@ const WhyOrderDirect: React.FC = () => {
               </div>
               {[
                 ['Service Fee', '$0', '~$4–8'],
-                ['Loyalty', '✓ Yes', '✗ No'],
                 ['Garlic Bread', '✓ Free', '✗ No'],
                 ['Wait Time', 'Faster', 'Slower'],
               ].map(([label, direct, app]) => (
@@ -104,7 +96,7 @@ const WhyOrderDirect: React.FC = () => {
         </div>
 
         {/* Reason cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {reasons.map((reason, i) => (
             <div
               key={reason.title}

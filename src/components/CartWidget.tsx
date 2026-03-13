@@ -81,11 +81,22 @@ export default function CartWidget({ items, isOpen, onClose, onIncrement, onDecr
 
                 {/* Info */}
                 <div className="flex-grow min-w-0">
-                  <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="flex items-start justify-between gap-2 mb-1">
                     <span className="font-bebas text-[17px] tracking-widest text-white leading-tight line-clamp-1">{item.name}</span>
                     <span className="font-bebas text-[18px] text-[#C0392B] leading-none flex-shrink-0">
                       ${(item.price * item.quantity).toFixed(0)}
                     </span>
+                  </div>
+
+                  {/* Customizations */}
+                  <div className="mb-2 space-y-0.5">
+                    {item.size && <p className="font-barlow text-[11px] font-700 uppercase tracking-widest text-[#d4a017]">Size: {item.size}</p>}
+                    {item.removedToppings && item.removedToppings.length > 0 && (
+                      <p className="font-inter text-[11px] text-[#C0392B]">- No {item.removedToppings.join(', ')}</p>
+                    )}
+                    {item.addedExtras && item.addedExtras.length > 0 && (
+                      <p className="font-inter text-[11px] text-emerald-500">+ {item.addedExtras.map(e => e.name).join(', ')}</p>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-1 bg-[#1a0a00] rounded-full w-fit border border-white/8 px-2 py-1">
@@ -135,8 +146,8 @@ export default function CartWidget({ items, isOpen, onClose, onIncrement, onDecr
 
           <button
             className={`w-full flex items-center justify-center gap-2 font-barlow font-700 text-[15px] uppercase tracking-wider py-4 rounded-[10px] transition-all duration-300 ${isEmpty
-                ? 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'
-                : 'bg-[#C0392B] text-white hover:bg-[#a93226] hover:shadow-[0_0_25px_rgba(192,57,43,0.5)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_8px_24px_-8px_rgba(192,57,43,0.5)]'
+              ? 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'
+              : 'bg-[#C0392B] text-white hover:bg-[#a93226] hover:shadow-[0_0_25px_rgba(192,57,43,0.5)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_8px_24px_-8px_rgba(192,57,43,0.5)]'
               }`}
             disabled={isEmpty}
           >

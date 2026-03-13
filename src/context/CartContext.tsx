@@ -3,7 +3,7 @@ import { type MenuItem, type CartItem } from '../types/menu';
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (item: MenuItem) => void;
+  addToCart: (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[] }) => void;
   incrementItem: (id: string) => void;
   decrementItem: (id: string) => void;
   clearCart: () => void;
@@ -24,20 +24,39 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('pizza_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (item: MenuItem) => {
+  const addToCart = (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[] }) => {
     setCartItems(prev => {
-      const existing = prev.find(i => i.menuItemId === item.id);
+      // Create a unique key for the item based on its stringified properties so we can stack identical customized pizzas
+      const customizationKey = JSON.stringify({
+        s: customizations?.size,
+        r: customizations?.removedToppings?.sort(),
+        e: customizations?.addedExtras?.map(e => e.name).sort()
+      });
+
+      const existing = prev.find(i => i.menuItemId === item.id && (i as any)._customizationKey === customizationKey);
       if (existing) {
-        return prev.map(i => i.menuItemId === item.id ? { ...i, quantity: i.quantity + 1 } : i);
+        return prev.map(i => i.id === existing.id ? { ...i, quantity: i.quantity + 1 } : i);
       }
-      return [...prev, {
+
+      let finalPrice = customizations?.price ?? item.price;
+      if (customizations?.addedExtras) {
+        finalPrice += customizations.addedExtras.reduce((acc, e) => acc + e.price, 0);
+      }
+
+      const cartItem: CartItem & { _customizationKey: string } = {
         id: Date.now().toString(),
         menuItemId: item.id,
         name: item.name,
-        price: item.price,
+        price: finalPrice,
         quantity: 1,
-        image: item.image
-      }];
+        image: item.image,
+        size: customizations?.size,
+        removedToppings: customizations?.removedToppings,
+        addedExtras: customizations?.addedExtras,
+        _customizationKey: customizationKey
+      };
+
+      return [...prev, cartItem];
     });
   };
 

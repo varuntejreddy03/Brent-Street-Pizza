@@ -10,14 +10,12 @@ const MobileCTABar: React.FC = () => {
       >
         ORDER PICKUP
       </Link>
-      <a
-        href="https://www.ubereats.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-1/2 h-full flex items-center justify-center text-white font-barlow font-700 text-[13px] uppercase tracking-widest bg-[#06C167] hover:bg-[#05a558] transition-colors"
+      <Link
+        to="/menu?tab=delivery"
+        className="w-1/2 h-full flex items-center justify-center text-white font-barlow font-700 text-[13px] uppercase tracking-widest bg-[#C0392B] border-l border-white/20 hover:bg-[#A93226] active:bg-[#8a2820] transition-colors"
       >
-        UBER EATS
-      </a>
+        ORDER DELIVERY
+      </Link>
     </div>
   );
 };
