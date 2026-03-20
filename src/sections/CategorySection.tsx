@@ -78,7 +78,6 @@ const CategorySection: React.FC = () => {
                 {cat.name}
               </h3>
               <p className="font-barlow text-[13px] font-400 uppercase tracking-[0.15em] text-white/40 group-hover:text-white/70 transition-colors duration-300">
-                {cat.sub}
               </p>
 
               {/* Explore arrow */}
