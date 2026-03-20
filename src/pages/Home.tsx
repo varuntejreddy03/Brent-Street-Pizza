@@ -5,7 +5,6 @@ import CategorySection from '../sections/CategorySection';
 import MarqueeBanner from '../sections/MarqueeBanner';
 import CustomerFavourites from '../sections/CustomerFavourites';
 import WhyOrderDirect from '../sections/WhyOrderDirect';
-import CustomerTestimonials from '../sections/CustomerTestimonials';
 import InfoSection from '../sections/InfoSection';
 import DeliveryAreas from '../sections/DeliveryAreas';
 
@@ -19,7 +18,6 @@ export default function Home() {
       <MarqueeBanner />
       <CustomerFavourites />
       <WhyOrderDirect />
-      <CustomerTestimonials />
       <InfoSection />
       <DeliveryAreas />
     </div>
