@@ -87,11 +87,15 @@ const Footer: React.FC = () => {
               <Phone className="w-4 h-4 text-[#C0392B] flex-shrink-0" />
               <span className="font-bebas text-[22px] tracking-wider text-white/70 group-hover:text-[#d4a017] transition-colors">0455 123 678</span>
             </a>
-            <div className="flex items-center gap-2.5 mt-2">
-              <Clock className="w-4 h-4 text-[#d4a017] flex-shrink-0" />
-              <p className="font-barlow text-[13px] font-600 text-white/40">
-                Daily 11:00 AM – 11:00 PM
-              </p>
+            <div className="flex flex-col gap-2 mt-2">
+              <div className="flex items-center gap-2.5">
+                <Clock className="w-4 h-4 text-[#d4a017] flex-shrink-0" />
+                <p className="font-barlow text-[12px] font-700 uppercase tracking-wider text-[#d4a017]/70">Pickup</p>
+              </div>
+              <p className="font-barlow text-[13px] font-600 text-white/40 pl-6">Daily 11am – 8pm</p>
+              <p className="font-barlow text-[12px] font-700 uppercase tracking-wider text-[#d4a017]/70 pl-6 pt-1">Delivery</p>
+              <p className="font-barlow text-[13px] font-600 text-white/40 pl-6">Sun–Thu 11am – 9:30pm</p>
+              <p className="font-barlow text-[13px] font-600 text-white/40 pl-6">Fri–Sat 11am – 11pm</p>
             </div>
           </div>
 

@@ -170,14 +170,20 @@ export default function ContactUs() {
               </div>
               <div className="space-y-3">
                 {[
-                  { day: 'Mon – Wed', hours: '11:00 AM – 9:00 PM' },
-                  { day: 'Thursday', hours: '11:00 AM – 10:00 PM' },
-                  { day: 'Fri – Sat', hours: '11:00 AM – 11:00 PM' },
-                  { day: 'Sunday', hours: '11:00 AM – 10:00 PM' },
+                  { day: 'In-Store Pickup', hours: 'Daily 11am – 8pm', sub: '' },
+                  { day: 'Delivery & Uber Eats', hours: '', sub: '' },
+                  { day: 'Sun – Thu', hours: '11am – 9:30pm', sub: '' },
+                  { day: 'Fri – Sat', hours: '11am – 11pm', sub: '' },
                 ].map(row => (
-                  <div key={row.day} className="flex justify-between items-center py-2 border-b border-white/5">
-                    <span className="font-barlow text-[14px] font-600 text-white/60">{row.day}</span>
-                    <span className="font-bebas text-[18px] text-white tracking-wider">{row.hours}</span>
+                  <div key={row.day} className={`flex justify-between items-center py-2 border-b border-white/5 ${
+                    row.day === 'Delivery & Uber Eats' ? 'pt-4' : ''
+                  }`}>
+                    <span className={`font-barlow text-[14px] font-600 ${
+                      row.day === 'In-Store Pickup' || row.day === 'Delivery & Uber Eats'
+                        ? 'text-[#c9922a] font-700 uppercase tracking-wider text-[12px]'
+                        : 'text-white/60'
+                    }`}>{row.day}</span>
+                    {row.hours && <span className="font-bebas text-[18px] text-white tracking-wider">{row.hours}</span>}
                   </div>
                 ))}
               </div>
