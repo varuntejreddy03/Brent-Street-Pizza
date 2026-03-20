@@ -46,7 +46,7 @@ const DeliveryAreas: React.FC = () => {
             {[
               { icon: <Bike className="w-5 h-5" />, value: '5km', label: 'Delivery Radius' },
               { icon: <span className="font-bebas text-[18px] leading-none">$5</span>, value: 'Flat Fee', label: 'No hidden costs' },
-              { icon: <Clock className="w-5 h-5" />, value: '30–45', label: 'Minutes est.' },
+              { icon: <Clock className="w-5 h-5" />, value: 'Min $25', label: 'Minimum order' },
             ].map(stat => (
               <div key={stat.label} className="flex flex-col items-center justify-center bg-[#1c0c00] border border-white/8 rounded-2xl py-6 px-4 gap-2 hover:border-[#C0392B]/30 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-[#C0392B]/15 border border-[#C0392B]/25 flex items-center justify-center text-[#C0392B]">
@@ -84,21 +84,11 @@ const DeliveryAreas: React.FC = () => {
             </p>
           </div>
 
-          {/* Minimum order notice + CTA */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 reveal">
-            <div className="flex-1 bg-[#1c0c00] border border-[#c9922a]/20 rounded-2xl px-6 py-4 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#c9922a]/15 border border-[#c9922a]/25 flex items-center justify-center flex-shrink-0">
-                <span className="font-bebas text-[16px] text-[#c9922a] leading-none">$25</span>
-              </div>
-              <div>
-                <p className="font-barlow text-[13px] font-700 uppercase tracking-wider text-white">Minimum Order</p>
-                <p className="font-inter text-[12px] text-white/35">$25 minimum for delivery orders</p>
-              </div>
-            </div>
-
+          {/* CTA */}
+          <div className="reveal">
             <Link
               to="/menu?tab=delivery"
-              className="flex-1 flex items-center justify-between bg-[#C0392B] hover:bg-[#a93226] text-white font-barlow font-700 text-[14px] uppercase tracking-wider px-6 py-4 rounded-2xl transition-all duration-200 shadow-[0_8px_28px_rgba(192,57,43,0.4)] hover:shadow-[0_12px_36px_rgba(192,57,43,0.6)] group w-full sm:w-auto"
+              className="flex items-center justify-between bg-[#C0392B] hover:bg-[#a93226] text-white font-barlow font-700 text-[14px] uppercase tracking-wider px-6 py-4 rounded-2xl transition-all duration-200 shadow-[0_8px_28px_rgba(192,57,43,0.4)] hover:shadow-[0_12px_36px_rgba(192,57,43,0.6)] group w-full"
             >
               <span className="flex items-center gap-2">
                 <Bike className="w-4 h-4" />
