@@ -168,26 +168,31 @@ export default function ContactUs() {
                 </div>
                 <h3 className="font-bebas text-[26px] text-white tracking-wider">Trading Hours</h3>
               </div>
-              <div className="space-y-3">
-                {[
-                  { day: 'In-Store Pickup', hours: 'Daily 11am – 8pm', sub: '' },
-                  { day: 'Delivery & Uber Eats', hours: '', sub: '' },
-                  { day: 'Sun – Thu', hours: '11am – 9:30pm', sub: '' },
-                  { day: 'Fri – Sat', hours: '11am – 11pm', sub: '' },
-                ].map(row => (
-                  <div key={row.day} className={`flex justify-between items-center py-2 border-b border-white/5 ${
-                    row.day === 'Delivery & Uber Eats' ? 'pt-4' : ''
-                  }`}>
-                    <span className={`font-barlow text-[14px] font-600 ${
-                      row.day === 'In-Store Pickup' || row.day === 'Delivery & Uber Eats'
-                        ? 'text-[#c9922a] font-700 uppercase tracking-wider text-[12px]'
-                        : 'text-white/60'
-                    }`}>{row.day}</span>
-                    {row.hours && <span className="font-bebas text-[18px] text-white tracking-wider">{row.hours}</span>}
-                  </div>
-                ))}
+
+              {/* Pickup block */}
+              <div className="bg-[#1a0a00] rounded-[12px] border border-white/6 p-4 mb-3">
+                <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.25em] text-[#c9922a] mb-3">In-Store Pickup</p>
+                <div className="flex justify-between items-center">
+                  <span className="font-inter text-[14px] text-white/55">Daily</span>
+                  <span className="font-bebas text-[22px] text-white tracking-wider">11am – 8pm</span>
+                </div>
               </div>
 
+              {/* Delivery block */}
+              <div className="bg-[#1a0a00] rounded-[12px] border border-white/6 p-4">
+                <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.25em] text-[#c9922a] mb-3">Delivery &amp; Uber Eats</p>
+                <div className="space-y-2.5">
+                  <div className="flex justify-between items-center">
+                    <span className="font-inter text-[14px] text-white/55">Sun – Thu</span>
+                    <span className="font-bebas text-[22px] text-white tracking-wider">11am – 9:30pm</span>
+                  </div>
+                  <div className="h-px bg-white/5" />
+                  <div className="flex justify-between items-center">
+                    <span className="font-inter text-[14px] text-white/55">Fri – Sat</span>
+                    <span className="font-bebas text-[22px] text-white tracking-wider">11am – 11pm</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Map embed */}
