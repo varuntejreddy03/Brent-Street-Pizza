@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Phone, MapPin, Clock, ArrowRight, Send } from 'lucide-react';
+import { Facebook, Instagram, Phone, MapPin, Clock, ArrowRight } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const [smsPhone, setSmsPhone] = useState('');
-  const [smsSubmitted, setSmsSubmitted] = useState(false);
-
-  const handleSmsSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (smsPhone.trim().length >= 8) setSmsSubmitted(true);
-  };
 
   return (
     <footer className="bg-[#110800] text-white relative overflow-hidden">
@@ -52,7 +45,7 @@ const Footer: React.FC = () => {
               <h2 className="font-bebas text-[30px] tracking-widest text-[#C0392B] leading-none">PIZZA</h2>
             </div>
             <p className="font-inter text-[13px] text-white/35 leading-relaxed max-w-[200px]">
-              Authentic Italian pizza crafted with passion, served hot daily since 2012.
+              Authentic Italian pizza crafted with passion, served hot daily since 2026.
             </p>
             <div className="flex gap-3">
               <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 hover:border-[#C0392B] hover:bg-[#C0392B]/10 flex items-center justify-center text-white/30 hover:text-white transition-all hover:scale-110">
@@ -102,38 +95,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 4: SMS Newsletter */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-white/25 mb-2">SMS Updates</h4>
-            <p className="font-inter text-[13px] text-white/35 leading-relaxed">
-              Get exclusive deals and daily specials via SMS.
-            </p>
-            {!smsSubmitted ? (
-              <form onSubmit={handleSmsSubmit} className="flex flex-col gap-2">
-                <input
-                  type="tel"
-                  value={smsPhone}
-                  onChange={e => setSmsPhone(e.target.value)}
-                  placeholder="Your mobile number"
-                  id="footer-sms-input"
-                  className="w-full bg-white/5 border border-white/8 focus:border-[#d4a017] rounded-[8px] px-4 py-2.5 font-inter text-[13px] text-white placeholder:text-white/20 outline-none transition-all"
-                />
-                <button
-                  type="submit"
-                  id="footer-sms-submit"
-                  className="flex items-center justify-center gap-2 bg-[#d4a017]/20 hover:bg-[#d4a017] border border-[#d4a017]/30 hover:border-[#d4a017] text-[#d4a017] hover:text-[#1a0a00] font-barlow font-700 text-[12px] uppercase tracking-wider py-2.5 px-4 rounded-[8px] transition-all duration-300"
-                >
-                  <Send className="w-3.5 h-3.5" /> Subscribe
-                </button>
-              </form>
-            ) : (
-              <div className="bg-[#d4a017]/10 border border-[#d4a017]/25 rounded-[8px] p-4">
-                <p className="font-barlow font-700 text-[13px] uppercase tracking-wider text-[#d4a017]">You're subscribed! 🎉</p>
-                <p className="font-inter text-[11px] text-white/30 mt-1">Expect exclusive deals in your SMS inbox.</p>
-              </div>
-            )}
-            <p className="font-inter text-[10px] text-white/15">Unsubscribe any time. No spam, ever.</p>
-          </div>
+
         </div>
 
         {/* Gold divider */}

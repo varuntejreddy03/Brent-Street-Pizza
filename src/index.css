@@ -432,3 +432,21 @@
   background: linear-gradient(90deg, transparent, #d4a017, transparent);
   opacity: 0.4;
 }
+
+/* Cart item slide-in from right */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Checkout button gentle pulse */
+@keyframes checkoutPulse {
+  0%, 100% { box-shadow: 0 8px 24px -8px rgba(192,57,43,0.5); }
+  50%       { box-shadow: 0 8px 32px -4px rgba(192,57,43,0.75); }
+}
+
+/* Card image scale utility */
+.group-hover\:scale-108:hover img,
+.group:hover .group-hover\:scale-108 {
+  transform: scale(1.08);
+}

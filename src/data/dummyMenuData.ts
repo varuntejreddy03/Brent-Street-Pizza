@@ -16,7 +16,7 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Sweet Chilli Sauce', price: 1.50 },
       { name: 'Tandoori Sauce', price: 1.50 },
       { name: 'Tomato Sauce', price: 1.50 },
-      { name: 'Chilli Paste', price: 0 }
+      { name: 'Chilli Paste', price: 1.50 },
     ]
   },
   {
@@ -28,7 +28,7 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Feta', price: 2.50 },
       { name: 'Mozzarella', price: 2.50 },
       { name: 'Tandoori Paneer', price: 1.50 },
-      { name: 'Vegan Cheese', price: 0 }
+      { name: 'Vegan Cheese', price: 5 },
     ]
   },
   {
@@ -49,7 +49,7 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Spinach', price: 1.50 },
       { name: 'Sundried Tomatoes', price: 1.50 },
       { name: 'Sweet Corn', price: 1.50 },
-      { name: 'Tomato', price: 0 }
+      { name: 'Tomato', price: 1.50 },
     ]
   },
   {
@@ -67,7 +67,7 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Hot Salami', price: 4 },
       { name: 'Pepperoni', price: 1.50 },
       { name: 'Salami', price: 1.50 },
-      { name: 'Virginia Leg Ham', price: 0 }
+      { name: 'Virginia Leg Ham', price: 3 },
     ]
   },
   {
@@ -78,7 +78,7 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Garlic Prawns', price: 1.50 },
       { name: 'Mussel', price: 1.50 },
       { name: 'Prawns', price: 4 },
-      { name: 'Smoked Salmon', price: 0 }
+      { name: 'Smoked Salmon', price: 1.50 },
     ]
   },
   {
@@ -89,13 +89,12 @@ export const PIZZA_EXTRAS: ExtraCategory[] = [
       { name: 'Lemon', price: 1.50 },
       { name: 'Oregano', price: 0.25 },
       { name: 'Parsley', price: 0.25 },
-      { name: 'Chili Flakes', price: 0.50 }
+      { name: 'Chili Flakes', price: 0.50 },
     ]
   }
 ];
 
 export const CATEGORIES: MenuCategory[] = [
-  { id: 'cat-meal-deals', name: 'Meal Deals', iconName: 'Tag' },
   { id: 'cat-classic-pizza', name: 'Classic Pizza', iconName: 'Pizza' },
   { id: 'cat-meat-pizza', name: 'Meat Pizza', iconName: 'Beef' },
   { id: 'cat-seafood-pizza', name: 'Seafood Pizza', iconName: 'Fish' },
@@ -103,23 +102,226 @@ export const CATEGORIES: MenuCategory[] = [
   { id: 'cat-vegetarian-pizza', name: 'Vegetarian Pizza', iconName: 'Leaf' },
 ];
 
+const PIZZA_SIZES = [
+  { name: 'Small', price: 14 },
+  { name: 'Large', price: 18 },
+  { name: 'Family', price: 22 },
+];
+
 export const MENU_ITEMS: MenuItem[] = [
+  // ── Classic Pizza ──────────────────────────────────────────────────────────
   {
     id: 'pizza-margherita',
     categoryId: 'cat-classic-pizza',
     name: 'Margherita',
-    description: 'Tomato Sauce, Cheese and Oregano',
-    price: 12.00,
-    sizes: [
-      { name: 'Small', price: 12 },
-      { name: 'Large', price: 15 },
-      { name: 'Family', price: 20 }
-    ],
+    description: 'Tomato Sauce, Cheese, Oregano',
+    price: 14,
+    sizes: PIZZA_SIZES,
     toppings: ['Tomato Sauce', 'Cheese', 'Oregano'],
     hasPizzaExtras: true,
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80',
-    tags: { isFavorite: true }
-  }
+    tags: { isVegan: false, isFavorite: true },
+  },
+  {
+    id: 'pizza-super-supreme',
+    categoryId: 'cat-classic-pizza',
+    name: 'Super Supreme',
+    description: 'Tomato Sauce, Virginia Leg Ham, Cheese, Mushroom, Pepperoni, Fresh Capsicum, Kalamata Olive, Spanish Onion, Pineapple',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Virginia Leg Ham', 'Cheese', 'Mushroom', 'Pepperoni', 'Fresh Capsicum', 'Kalamata Olive', 'Spanish Onion', 'Pineapple'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80',
+    tags: { isFavorite: true },
+  },
+  {
+    id: 'pizza-hawaiian',
+    categoryId: 'cat-classic-pizza',
+    name: 'Hawaiian',
+    description: 'Tomato Sauce, Ham, Cheese, Pineapple',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Ham', 'Cheese', 'Pineapple'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'pizza-bbq-chicken-classic',
+    categoryId: 'cat-classic-pizza',
+    name: 'BBQ Chicken',
+    description: 'BBQ Sauce, Chicken, Cheese, Onion, Capsicum',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['BBQ Sauce', 'Chicken', 'Cheese', 'Onion', 'Capsicum'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80',
+    tags: {},
+  },
+
+  // ── Meat Pizza ─────────────────────────────────────────────────────────────
+  {
+    id: 'pizza-meat-lovers',
+    categoryId: 'cat-meat-pizza',
+    name: 'Meat Lovers',
+    description: 'Tomato Sauce, Pepperoni, Salami, Bacon, Ham, Beef, Cheese',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Pepperoni', 'Salami', 'Bacon', 'Ham', 'Beef', 'Cheese'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80',
+    tags: { isFavorite: true },
+  },
+  {
+    id: 'pizza-pepperoni',
+    categoryId: 'cat-meat-pizza',
+    name: 'Pepperoni',
+    description: 'Tomato Sauce, Double Pepperoni, Cheese',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Double Pepperoni', 'Cheese'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'pizza-bbq-beef',
+    categoryId: 'cat-meat-pizza',
+    name: 'BBQ Beef',
+    description: 'BBQ Sauce, Ground Beef, Cheese, Onion, Jalapeños',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['BBQ Sauce', 'Ground Beef', 'Cheese', 'Onion', 'Jalapeños'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&q=80',
+    tags: { isSpicy: true },
+  },
+  {
+    id: 'pizza-hot-salami',
+    categoryId: 'cat-meat-pizza',
+    name: 'Hot Salami',
+    description: 'Tomato Sauce, Hot Salami, Cheese, Chilli, Capsicum',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Hot Salami', 'Cheese', 'Chilli', 'Capsicum'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&q=80',
+    tags: { isSpicy: true },
+  },
+
+  // ── Seafood Pizza ──────────────────────────────────────────────────────────
+  {
+    id: 'pizza-prawn-garlic',
+    categoryId: 'cat-seafood-pizza',
+    name: 'Prawn & Garlic',
+    description: 'Garlic Aioli, Prawns, Cheese, Spinach, Sundried Tomatoes',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Garlic Aioli', 'Prawns', 'Cheese', 'Spinach', 'Sundried Tomatoes'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1555072956-7758afb20e8f?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'pizza-smoked-salmon',
+    categoryId: 'cat-seafood-pizza',
+    name: 'Smoked Salmon',
+    description: 'Sour Cream, Smoked Salmon, Cheese, Capers, Spanish Onion',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Sour Cream', 'Smoked Salmon', 'Cheese', 'Capers', 'Spanish Onion'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'pizza-anchovy',
+    categoryId: 'cat-seafood-pizza',
+    name: 'Anchovy & Olive',
+    description: 'Tomato Sauce, Anchovies, Kalamata Olives, Cheese, Garlic',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Anchovies', 'Kalamata Olives', 'Cheese', 'Garlic'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=600&q=80',
+    tags: {},
+  },
+
+  // ── Chicken Pizza ──────────────────────────────────────────────────────────
+  {
+    id: 'pizza-tandoori-chicken',
+    categoryId: 'cat-chicken-pizza',
+    name: 'Tandoori Chicken',
+    description: 'Tandoori Sauce, Chicken, Tandoori Paneer, Onion, Capsicum',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tandoori Sauce', 'Chicken', 'Tandoori Paneer', 'Onion', 'Capsicum'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&q=80',
+    tags: { isFavorite: true },
+  },
+  {
+    id: 'pizza-peri-peri-chicken',
+    categoryId: 'cat-chicken-pizza',
+    name: 'Peri Peri Chicken',
+    description: 'Peri-Peri Sauce, Chicken, Cheese, Onion, Jalapeños',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Peri-Peri Sauce', 'Chicken', 'Cheese', 'Onion', 'Jalapeños'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80',
+    tags: { isSpicy: true },
+  },
+  {
+    id: 'pizza-chicken-bacon',
+    categoryId: 'cat-chicken-pizza',
+    name: 'Chicken & Bacon',
+    description: 'BBQ Sauce, Chicken, Bacon, Cheese, Mushroom',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['BBQ Sauce', 'Chicken', 'Bacon', 'Cheese', 'Mushroom'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80',
+    tags: {},
+  },
+
+  // ── Vegetarian Pizza ───────────────────────────────────────────────────────
+  {
+    id: 'pizza-garden-veg',
+    categoryId: 'cat-vegetarian-pizza',
+    name: 'Garden Veggie',
+    description: 'Tomato Sauce, Cheese, Capsicum, Mushroom, Onion, Olives, Spinach',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Tomato Sauce', 'Cheese', 'Capsicum', 'Mushroom', 'Onion', 'Olives', 'Spinach'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80',
+    tags: { isVegan: true },
+  },
+  {
+    id: 'pizza-feta-spinach',
+    categoryId: 'cat-vegetarian-pizza',
+    name: 'Feta & Spinach',
+    description: 'Pesto Mayo, Feta, Spinach, Sundried Tomatoes, Bocconcini',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Pesto Mayo', 'Feta', 'Spinach', 'Sundried Tomatoes', 'Bocconcini'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80',
+    tags: { isVegan: false, isGlutenFree: false },
+  },
+  {
+    id: 'pizza-roast-pumpkin',
+    categoryId: 'cat-vegetarian-pizza',
+    name: 'Roast Pumpkin',
+    description: 'Garlic Aioli, Grilled Eggplant, Sweet Corn, Cheese, Spinach, Tomato',
+    price: 14,
+    sizes: PIZZA_SIZES,
+    toppings: ['Garlic Aioli', 'Grilled Eggplant', 'Sweet Corn', 'Cheese', 'Spinach', 'Tomato'],
+    hasPizzaExtras: true,
+    image: 'https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&q=80',
+    tags: { isVegan: true },
+  },
 ];
 
 export const ADD_ONS: MenuItem[] = [];

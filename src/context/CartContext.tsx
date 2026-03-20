@@ -3,7 +3,7 @@ import { type MenuItem, type CartItem } from '../types/menu';
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[] }) => void;
+  addToCart: (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[], quantity?: number }) => void;
   incrementItem: (id: string) => void;
   decrementItem: (id: string) => void;
   clearCart: () => void;
@@ -24,7 +24,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('pizza_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[] }) => {
+  const addToCart = (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[], quantity?: number }) => {
     setCartItems(prev => {
       // Create a unique key for the item based on its stringified properties so we can stack identical customized pizzas
       const customizationKey = JSON.stringify({
@@ -33,9 +33,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         e: customizations?.addedExtras?.map(e => e.name).sort()
       });
 
+      const qty = customizations?.quantity ?? 1;
       const existing = prev.find(i => i.menuItemId === item.id && (i as any)._customizationKey === customizationKey);
       if (existing) {
-        return prev.map(i => i.id === existing.id ? { ...i, quantity: i.quantity + 1 } : i);
+        return prev.map(i => i.id === existing.id ? { ...i, quantity: i.quantity + qty } : i);
       }
 
       let finalPrice = customizations?.price ?? item.price;
@@ -48,7 +49,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         menuItemId: item.id,
         name: item.name,
         price: finalPrice,
-        quantity: 1,
+        quantity: customizations?.quantity ?? 1,
         image: item.image,
         size: customizations?.size,
         removedToppings: customizations?.removedToppings,
