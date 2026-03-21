@@ -9,7 +9,9 @@ import { MenuProvider } from './context/MenuContext';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import ContactUs from './pages/ContactUs';
+import About from './pages/About';
 import Admin from './pages/Admin';
+import Deals from './pages/Deals';
 
 export default function App() {
   return (
@@ -24,7 +26,9 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/contact" element={<ContactUs />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/deals" element={<Deals />} />
               </Routes>
             </main>
 

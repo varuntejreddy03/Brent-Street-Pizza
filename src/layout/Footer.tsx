@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Phone, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { Facebook, Instagram, Phone, MapPin, ArrowRight } from 'lucide-react';
 
 const Footer: React.FC = () => {
 
@@ -76,9 +76,9 @@ const Footer: React.FC = () => {
             ))}
           </div>
 
-          {/* Col 3: Contact + Hours */}
+          {/* Col 3: Contact */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-white/25 mb-2">Contact</h4>
+            <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-white/25 mb-2">Location</h4>
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#C0392B] mt-0.5 flex-shrink-0" />
               <p className="font-inter text-[13px] text-white/40 leading-relaxed">2 Brent Street,<br />Glenorchy TAS 7010</p>
@@ -87,18 +87,24 @@ const Footer: React.FC = () => {
               <Phone className="w-4 h-4 text-[#C0392B] flex-shrink-0" />
               <span className="font-bebas text-[22px] tracking-wider text-white/70 group-hover:text-[#d4a017] transition-colors">0455 123 678</span>
             </a>
-            <div className="mt-2 space-y-2">
-              <div className="flex items-center gap-2.5">
-                <Clock className="w-4 h-4 text-[#d4a017] flex-shrink-0" />
-                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#d4a017]/70">Trading Hours</p>
+          </div>
+
+          {/* Col 4: Trading Hours */}
+          <div className="flex flex-col gap-4">
+            <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-white/25 mb-2">Trading Hours</h4>
+            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+              <div className="mb-4">
+                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#d4a017] mb-1">In-Store Pickup</p>
+                <p className="font-inter text-[13px] text-white/50">Daily 11am – 8pm</p>
               </div>
-              <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-white/40 pl-6">In-Store Pickup</p>
-              <p className="font-inter text-[12px] text-white/35 pl-6">Daily 11am – 8pm</p>
-              <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-white/40 pl-6 pt-1">Delivery &amp; Uber Eats</p>
-              <p className="font-inter text-[12px] text-white/35 pl-6">Sun – Thu: 11am – 9:30pm</p>
-              <p className="font-inter text-[12px] text-white/35 pl-6">Fri – Sat: 11am – 11pm</p>
+              <div>
+                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#C0392B] mb-1">Delivery & Uber Eats</p>
+                <p className="font-inter text-[13px] text-white/50 mb-1">Sun – Thu: 11am – 9:30pm</p>
+                <p className="font-inter text-[13px] text-white/50">Fri – Sat: 11am – 11pm</p>
+              </div>
             </div>
           </div>
+
 
 
         </div>

@@ -27,9 +27,6 @@ const DeliveryAreas: React.FC = () => {
 
         {/* Header */}
         <div className="text-center mb-16 reveal">
-          <span className="font-barlow text-[12px] font-700 uppercase tracking-[0.35em] text-[#c9922a] block mb-4">
-            — We Come To You —
-          </span>
           <h2 className="font-bebas text-[56px] md:text-[80px] text-white tracking-wider leading-none mb-4">
             Delivery Areas
           </h2>

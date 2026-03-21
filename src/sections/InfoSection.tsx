@@ -26,7 +26,7 @@ const InfoSection: React.FC = () => {
           {/* Left: Text */}
           <div className="reveal-left">
             <span className="font-barlow text-[13px] font-600 uppercase tracking-[0.3em] text-[#d4a017] block mb-4">
-              — Fresh pizza, Fast Delivery, Always Delicious —
+              — our story —
             </span>
             <h2 className="font-bebas text-[52px] md:text-[72px] lg:text-[80px] text-white tracking-[0.02em] leading-[0.9] uppercase mb-8">
               Crafted<br />
