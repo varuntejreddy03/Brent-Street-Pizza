@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
             <Link to="/menu" className="btn-primary px-7 py-3 text-[13px]">
               Order Pickup <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link to="/menu" className="btn-outline px-7 py-3 text-[13px]">
+            <Link to="/menu?tab=delivery" className="btn-primary px-7 py-3 text-[13px]">
               Order Delivery <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -89,15 +89,15 @@ const Footer: React.FC = () => {
           {/* Col 4: Trading Hours */}
           <div className="flex flex-col gap-4">
             <h4 className="font-barlow text-[11px] font-700 uppercase tracking-[0.25em] text-[#CCCCCC] mb-2">Trading Hours</h4>
-            <div className="bg-[#1A1A1A]/5 p-4 rounded-xl border border-[#E8D8C8]">
+            <div className="bg-[#2a2a2a] p-4 rounded-xl border border-white/10">
               <div className="mb-4">
-                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#CCCCCC] mb-1">In-Store Pickup</p>
-                <p className="font-inter text-[13px] text-[#CCCCCC]">Daily 11am – 8pm</p>
+                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#c9922a] mb-1">In-Store Pickup</p>
+                <p className="font-inter text-[13px] text-white">Daily 11am – 8pm</p>
               </div>
               <div>
-                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#CCCCCC] mb-1">Delivery & Uber Eats</p>
-                <p className="font-inter text-[13px] text-[#CCCCCC] mb-1">Sun – Thu: 11am – 9:30pm</p>
-                <p className="font-inter text-[13px] text-[#CCCCCC]">Fri – Sat: 11am – 11pm</p>
+                <p className="font-barlow text-[11px] font-700 uppercase tracking-wider text-[#c9922a] mb-1">Delivery &amp; Uber Eats</p>
+                <p className="font-inter text-[13px] text-white mb-1">Sun – Thu: 11am – 9:30pm</p>
+                <p className="font-inter text-[13px] text-white">Fri – Sat: 11am – 11pm</p>
               </div>
             </div>
           </div>
