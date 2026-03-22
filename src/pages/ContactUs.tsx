@@ -171,7 +171,7 @@ export default function ContactUs() {
 
               {/* Pickup block */}
               <div className="bg-[#FDF8F2] rounded-[12px] border border-[#E8D8C8] p-4 mb-3">
-                <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.25em] text-[#D4952A] mb-3">In-Store Pickup</p>
+                <p className="font-barlow text-[13px] font-900 uppercase tracking-[0.2em] text-[#C8201A] mb-3">In-Store Pickup</p>
                 <div className="flex justify-between items-center">
                   <span className="font-inter text-[14px] text-[#555555]">Daily</span>
                   <span className="font-bebas text-[22px] text-[#2B2B2B] tracking-wider">11am – 8pm</span>
@@ -180,7 +180,7 @@ export default function ContactUs() {
 
               {/* Delivery block */}
               <div className="bg-[#FDF8F2] rounded-[12px] border border-[#E8D8C8] p-4">
-                <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.25em] text-[#D4952A] mb-3">Delivery &amp; Uber Eats</p>
+                <p className="font-barlow text-[13px] font-900 uppercase tracking-[0.2em] text-[#C8201A] mb-3">Delivery &amp; Uber Eats</p>
                 <div className="space-y-2.5">
                   <div className="flex justify-between items-center">
                     <span className="font-inter text-[14px] text-[#555555]">Sun – Thu</span>
