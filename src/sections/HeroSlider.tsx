@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
               className="font-poppins text-[20px] md:text-[28px] font-700 tracking-normal mb-10 animate-fade-up"
               style={{ color: 'rgba(255, 255, 255, 0.90)', textShadow: '0 2px 8px rgba(0,0,0,0.6)', animationDelay: '0.3s', opacity: 0, animationFillMode: 'forwards' }}
             >
-               Made to Order.
+               Made to order.
             </p>
 
             {/* CTA Buttons */}
