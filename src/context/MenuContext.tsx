@@ -24,36 +24,15 @@ export const MenuProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Load from localStorage or fallback to dummy
-    const storedItems = localStorage.getItem('MENU_ITEMS');
-    const storedCategories = localStorage.getItem('CATEGORIES');
-    const storedExtras = localStorage.getItem('PIZZA_EXTRAS');
+    // Always load fresh from source — clears any stale localStorage cache
+    setMenuItems(dummyItems);
+    setCategories(dummyCategories);
+    setExtrasState(dummyExtras);
+    localStorage.setItem('MENU_ITEMS', JSON.stringify(dummyItems));
+    localStorage.setItem('CATEGORIES', JSON.stringify(dummyCategories));
+    localStorage.setItem('PIZZA_EXTRAS', JSON.stringify(dummyExtras));
     const storedAdmin = localStorage.getItem('IS_ADMIN');
-
-    if (storedItems) {
-      setMenuItems(JSON.parse(storedItems));
-    } else {
-      setMenuItems(dummyItems);
-      localStorage.setItem('MENU_ITEMS', JSON.stringify(dummyItems));
-    }
-
-    if (storedCategories) {
-      setCategories(JSON.parse(storedCategories));
-    } else {
-      setCategories(dummyCategories);
-      localStorage.setItem('CATEGORIES', JSON.stringify(dummyCategories));
-    }
-
-    if (storedExtras) {
-      setExtrasState(JSON.parse(storedExtras));
-    } else {
-      setExtrasState(dummyExtras);
-      localStorage.setItem('PIZZA_EXTRAS', JSON.stringify(dummyExtras));
-    }
-
-    if (storedAdmin === 'true') {
-      setIsAdmin(true);
-    }
+    if (storedAdmin === 'true') setIsAdmin(true);
   }, []);
 
   const saveItems = (items: MenuItem[]) => {

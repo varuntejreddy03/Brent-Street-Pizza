@@ -53,8 +53,8 @@ const CategorySection: React.FC = () => {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             />
 
-            {/* Dark overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#FDF8F2]/90 via-[#FDF8F2]/50 to-transparent" />
+            {/* Dark overlay — keeps image visible */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
             {/* Color glow on hover */}
             <div
@@ -72,15 +72,10 @@ const CategorySection: React.FC = () => {
                   <cat.icon className="w-5 h-5" style={{ color: cat.color }} strokeWidth={1.5} />
                 </div>
               </div>
-              <h3
-                className="font-bebas text-[40px] md:text-[48px] leading-none text-[#1A1A1A] tracking-wider group-hover:translate-x-1 transition-transform duration-300"
-              >
+              <h3 className="font-bebas text-[40px] md:text-[48px] leading-none text-white tracking-wider group-hover:translate-x-1 transition-transform duration-300">
                 {cat.name}
               </h3>
-              <p className="font-barlow text-[13px] font-400 uppercase tracking-[0.15em] text-[#555555] group-hover:text-[#555555] transition-colors duration-300">
-              </p>
-
-              {/* Explore arrow */}
+{/* Explore arrow */}
               <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
                 <span className="font-barlow text-[12px] font-700 uppercase tracking-[0.15em]" style={{ color: cat.color }}>
                   Explore

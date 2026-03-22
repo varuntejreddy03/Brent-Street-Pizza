@@ -157,21 +157,19 @@ const CustomizationModal: React.FC<Props> = ({
               className="absolute inset-0 w-full h-full object-cover"
             />
 
-            {/* Dark gradient — bottom-heavy so text is readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
-            {/* Right-edge fade into modal body on desktop */}
-            <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-transparent via-transparent to-[#110700]/60" />
+            {/* Gradient only at very bottom for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
+            {/* Right-edge fade removed — was bleeding white onto image */}
 
-            {/* Close button — top-right of left panel */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full
-                bg-black/55 backdrop-blur-md border border-[#E8D8C8]
+              className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full
+                bg-white/90 backdrop-blur-md border border-white/50
                 flex items-center justify-center
-                text-[#555555] hover:text-[#1A1A1A] hover:bg-black/80 hover:border-[#E8D8C8]
-                transition-all duration-200"
+                text-[#1A1A1A] hover:bg-white hover:scale-110
+                transition-all duration-200 shadow-lg"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
 
             {/* Dietary badges — top-left */}
@@ -195,30 +193,27 @@ const CustomizationModal: React.FC<Props> = ({
             {/* Name + meta — pinned to bottom of image panel */}
             <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 z-10">
               {/* "Customize your order" eyebrow */}
-              <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.3em] text-[#D4952A] mb-1">
+              <p className="font-barlow text-[10px] font-700 uppercase tracking-[0.3em] text-[#c9922a] mb-1">
                 Customize Your Order
               </p>
-
-              {/* Pizza name */}
-              <h2 className="font-bebas text-[36px] sm:text-[42px] text-[#1A1A1A] tracking-widest leading-none mb-2">
+              <h2 className="font-bebas text-[36px] sm:text-[42px] text-white tracking-widest leading-none mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 {item.name}
               </h2>
 
               {/* Rating row */}
               <div className="flex items-center gap-2 mb-2">
-                <div className="flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 border border-[#E8D8C8]">
-                  <Star className="w-3 h-3 fill-[#D4952A] text-[#D4952A]" />
-                  <span className="font-barlow text-[11px] font-700 text-[#2B2B2B]">{rating}</span>
+                <div className="flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 border border-white/20">
+                  <Star className="w-3 h-3 fill-[#c9922a] text-[#c9922a]" />
+                  <span className="font-barlow text-[11px] font-700 text-white">{rating}</span>
                 </div>
                 {item.sizes && item.sizes.length > 0 && (
-                  <span className="font-barlow text-[11px] font-700 text-[#555555] uppercase tracking-wider">
+                  <span className="font-barlow text-[11px] font-700 text-white/70 uppercase tracking-wider">
                     from ${item.sizes[0].price}
                   </span>
                 )}
               </div>
 
-              {/* Short description — desktop only */}
-              <p className="hidden sm:block font-inter text-[12px] text-[#555555] leading-relaxed line-clamp-3">
+              <p className="hidden sm:block font-inter text-[12px] text-white/60 leading-relaxed line-clamp-3">
                 {item.description}
               </p>
             </div>
@@ -229,10 +224,7 @@ const CustomizationModal: React.FC<Props> = ({
           ════════════════════════════════════════════════════════════════ */}
           <div
             ref={rightPanelRef}
-            className="flex-1 overflow-y-auto overscroll-contain
-              bg-[#110700] sm:bg-[#FDF8F2]
-              /* subtle left border on desktop */
-              sm:border-l sm:border-[#E8D8C8]"
+            className="flex-1 overflow-y-auto overscroll-contain bg-[#FDF8F2] sm:border-l sm:border-[#E8D8C8]"
             style={{ scrollbarWidth: 'thin', scrollbarColor: '#C8201A #FDF8F2' }}
           >
             <div className="px-5 sm:px-6 pt-5 pb-4 space-y-7">
@@ -300,7 +292,7 @@ const CustomizationModal: React.FC<Props> = ({
                             font-inter text-[12px] transition-all duration-200
                             ${removed
                               ? 'border-[#E8D8C8] bg-transparent text-[#555555] line-through'
-                              : 'border-[#D4952A]/28 bg-[#2a1800] text-[#555555] hover:border-[#C8201A]/50 hover:bg-[#C8201A]/8'
+                              : 'border-[#D4952A]/28 bg-white text-[#555555] hover:border-[#C8201A]/50 hover:bg-[#C8201A]/8'
                             }`}
                         >
                           {t}
@@ -342,7 +334,7 @@ const CustomizationModal: React.FC<Props> = ({
                           <button
                             onClick={() => setOpenAccordion(open ? null : cat.id)}
                             className={`w-full flex items-center justify-between px-4 py-3 transition-colors duration-200
-                              ${open ? 'bg-[#1e0e00]' : 'bg-[#160900] hover:bg-[#1a0c00]'}`}
+                              ${open ? 'bg-[#F0E8DC]' : 'bg-[#EDE4D8] hover:bg-[#E8DDD0]'}`}
                           >
                             <div className="flex items-center gap-2.5">
                               <span className="text-[14px]">{CAT_ICONS[cat.id] ?? '➕'}</span>
@@ -363,7 +355,7 @@ const CustomizationModal: React.FC<Props> = ({
                           {/* Body */}
                           <div className={`overflow-hidden transition-all duration-300 ease-in-out
                             ${open ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                            <div className="px-4 py-3.5 bg-[#0e0600] flex flex-wrap gap-1.5">
+                            <div className="px-4 py-3.5 bg-[#F5EDE0] flex flex-wrap gap-1.5">
                               {cat.options.map(opt => {
                                 const added = addedExtras.has(opt.name);
                                 return (
@@ -373,8 +365,8 @@ const CustomizationModal: React.FC<Props> = ({
                                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border
                                       font-inter text-[11px] transition-all duration-150
                                       ${added
-                                        ? 'bg-[#C8201A] border-[#C8201A] text-white shadow-[0_0_10px_rgba(200, 32, 26,0.3)]'
-                                        : 'bg-[#1A1A1A]/5 border-[#E8D8C8] text-[#555555] hover:border-[#E8D8C8] hover:text-white hover:bg-[#1A1A1A]/5'
+                                        ? 'bg-[#C8201A] border-[#C8201A] text-white'
+                                        : 'bg-white border-[#E8D8C8] text-[#555555] hover:border-[#C8201A]/40 hover:text-[#1A1A1A]'
                                       }`}
                                   >
                                     {added && <Check className="w-2.5 h-2.5 flex-shrink-0" strokeWidth={3} />}
@@ -399,7 +391,7 @@ const CustomizationModal: React.FC<Props> = ({
               {addedExtras.size > 0 && (
                 <section>
                   <FieldLabel>Your Extras</FieldLabel>
-                  <div className="bg-[#160900] border border-[#E8D8C8] rounded-xl p-3.5">
+                  <div className="bg-[#F0E8DC] border border-[#E8D8C8] rounded-xl p-3.5">
                     <div className="flex flex-wrap gap-1.5">
                       {Array.from(addedExtras.values()).map(e => (
                         <span
@@ -442,7 +434,7 @@ const CustomizationModal: React.FC<Props> = ({
         {/* ════════════════════════════════════════════════════════════════════
             BOTTOM ACTION BAR — full width, spans both columns
         ════════════════════════════════════════════════════════════════════ */}
-        <div className="flex-shrink-0 border-t border-[#E8D8C8] bg-[#0a0400]/98 backdrop-blur-xl px-5 sm:px-6 py-4">
+        <div className="flex-shrink-0 border-t border-[#E8D8C8] bg-[#FDF8F2] px-5 sm:px-6 py-4">
 
           {/* Price breakdown — shown above controls on mobile, inline on desktop */}
           <div className="flex items-center justify-between sm:hidden mb-3">
@@ -456,11 +448,11 @@ const CustomizationModal: React.FC<Props> = ({
           <div className="flex items-center gap-3">
 
             {/* ── Quantity stepper ── */}
-            <div className="flex items-center bg-[#1c0e00] border border-[#E8D8C8] rounded-full overflow-hidden flex-shrink-0">
+            <div className="flex items-center bg-white border border-[#E8D8C8] rounded-full overflow-hidden flex-shrink-0">
               <button
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
                 className="w-11 h-11 flex items-center justify-center
-                  text-[#555555] hover:text-[#FFFCF7] hover:bg-[#1A1A1A]/5
+                  text-[#555555] hover:text-[#1A1A1A] hover:bg-[#F0E8DC]
                   transition-all active:scale-90"
               >
                 <Minus className="w-4 h-4" />
@@ -471,7 +463,7 @@ const CustomizationModal: React.FC<Props> = ({
               <button
                 onClick={() => setQuantity(q => q + 1)}
                 className="w-11 h-11 flex items-center justify-center
-                  text-[#555555] hover:text-[#D4952A] hover:bg-[#1A1A1A]/5
+                  text-[#555555] hover:text-[#D4952A] hover:bg-[#F0E8DC]
                   transition-all active:scale-90"
               >
                 <Plus className="w-4 h-4" />

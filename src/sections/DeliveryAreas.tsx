@@ -77,7 +77,7 @@ const DeliveryAreas: React.FC = () => {
             </div>
             <p className="font-inter text-[12px] text-[#555555] mt-5">
               Not sure if we deliver to you? Call us on{' '}
-              <a href="tel:0455123678" className="text-[#D4952A] hover:text-[#2B2B2B] transition-colors">0455 123 678</a>
+              <a href="tel:0362724004" className="text-[#D4952A] hover:text-[#2B2B2B] transition-colors">03 6272 4004</a>
             </p>
           </div>
 

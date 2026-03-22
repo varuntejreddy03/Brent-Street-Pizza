@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
           {/* Right: Phone + Cart + CTA */}
           <div className="flex items-center gap-4 md:gap-6 ml-auto relative z-[120]">
             <a
-              href="tel:0455123678"
+              href="tel:0362724004"
               className="hidden md:flex items-center gap-2 text-black hover:text-[#C8201A] transition-colors duration-300 group"
             >
               <Phone className="w-4 h-4 group-hover:scale-110 transition-transform" />
@@ -131,9 +131,9 @@ const Navbar: React.FC = () => {
             ))}
           </div>
           <div className="p-6 border-t border-[#E8D8C8]">
-            <a href="tel:0455123678" className="flex items-center gap-3 text-[#1A1A1A] hover:text-[#C8201A] transition-colors">
+            <a href="tel:0362724004" className="flex items-center gap-3 text-[#1A1A1A] hover:text-[#C8201A] transition-colors">
               <Phone className="w-5 h-5" />
-              <span className="font-barlow text-[20px] font-700 tracking-wider">0455 123 678</span>
+              <span className="font-barlow text-[20px] font-700 tracking-wider">03 6272 4004</span>
             </a>
           </div>
         </div>

@@ -83,7 +83,7 @@ const CateringSection: React.FC = () => {
 
             {/* Quick call CTA */}
             <a
-              href="tel:0455123678"
+              href="tel:0362724004"
               className="mt-10 inline-flex items-center gap-3 btn-outline border-[#D4952A]/30 text-[#D4952A] hover:border-[#D4952A] hover:bg-[#D4952A]/10"
             >
               Talk to Us Directly <ArrowRight className="w-4 h-4" />
@@ -165,8 +165,8 @@ const CateringSection: React.FC = () => {
                   </div>
                   <h4 className="font-bebas text-[28px] text-[#1A1A1A] tracking-wider">Enquiry Received!</h4>
                   <p className="font-inter text-[14px] text-[#555555]">We'll be in touch within 24 hours to discuss your event.</p>
-                  <a href="tel:0455123678" className="font-barlow font-700 text-[15px] uppercase tracking-wider text-[#D4952A] hover:underline mt-2">
-                    Or call us now: 0455 123 678
+                  <a href="tel:0362724004" className="font-barlow font-700 text-[15px] uppercase tracking-wider text-[#D4952A] hover:underline mt-2">
+                    Or call us now: 03 6272 4004
                   </a>
                 </div>
               )}

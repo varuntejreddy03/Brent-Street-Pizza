@@ -40,8 +40,8 @@ export default function ContactUs() {
             {
               icon: <Phone className="w-6 h-6" />,
               label: 'Call Us Directly',
-              value: '0455 123 678',
-              href: 'tel:0455123678',
+              value: '03 6272 4004',
+              href: 'tel:0362724004',
               color: '#C8201A',
             },
             {
@@ -151,8 +151,8 @@ export default function ContactUs() {
                 </div>
                 <h3 className="font-bebas text-[30px] text-[#1A1A1A] tracking-wider">Message Received!</h3>
                 <p className="font-inter text-[14px] text-[#555555] max-w-xs">We'll reply to your email within a few hours. For urgent matters, call us directly.</p>
-                <a href="tel:0455123678" className="font-bebas text-[28px] text-[#C8201A] tracking-wider hover:text-[#D4952A] transition-colors">
-                  0455 123 678
+                <a href="tel:0362724004" className="font-bebas text-[28px] text-[#C8201A] tracking-wider hover:text-[#D4952A] transition-colors">
+                  03 6272 4004
                 </a>
               </div>
             )}

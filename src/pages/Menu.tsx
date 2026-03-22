@@ -332,9 +332,9 @@ export default function Menu() {
             <p className="font-inter text-[#555555] text-[14px] mb-8 max-w-lg mx-auto leading-relaxed">
               Call us directly — we'll handle custom orders, dietary requirements, and catering personally.
             </p>
-            <a href="tel:0455123678" className="inline-flex items-center gap-3 text-[#C8201A] hover:text-[#D4952A] transition-colors font-bebas text-[38px] md:text-[50px] tracking-wider group">
+            <a href="tel:0362724004" className="inline-flex items-center gap-3 text-[#C8201A] hover:text-[#D4952A] transition-colors font-bebas text-[38px] md:text-[50px] tracking-wider group">
               <Phone className="w-8 h-8 group-hover:scale-110 transition-transform" />
-              0455 123 678
+              03 6272 4004
             </a>
           </div>
         </div>

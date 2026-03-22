@@ -80,9 +80,9 @@ const Footer: React.FC = () => {
               <MapPin className="w-4 h-4 text-[#CCCCCC] mt-0.5 flex-shrink-0" />
               <p className="font-inter text-[13px] text-[#CCCCCC] leading-relaxed">2 Brent Street,<br />Glenorchy TAS 7010</p>
             </div>
-            <a href="tel:0455123678" className="flex items-center gap-2.5 group">
+            <a href="tel:0362724004" className="flex items-center gap-2.5 group">
               <Phone className="w-4 h-4 text-[#CCCCCC] flex-shrink-0" />
-              <span className="font-bebas text-[22px] tracking-wider text-[#CCCCCC] group-hover:text-[#C8201A] transition-colors">0455 123 678</span>
+              <span className="font-bebas text-[22px] tracking-wider text-[#CCCCCC] group-hover:text-[#C8201A] transition-colors">03 6272 4004</span>
             </a>
           </div>
 

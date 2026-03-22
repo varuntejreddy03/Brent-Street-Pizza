@@ -4,10 +4,10 @@ import { Star, ShoppingBag, ArrowRight } from 'lucide-react';
 import { MENU_ITEMS } from '../data/dummyMenuData';
 
 const RATINGS: Record<string, number> = {
-  'pizza-1': 4.9,
-  'pizza-2': 4.8,
-  'pizza-3': 4.9,
-  'pizza-4': 4.7,
+  'pizza-margherita': 4.9,
+  'pizza-super-supreme': 4.9,
+  'pizza-meat-lovers': 4.9,
+  'pizza-tandoori-chicken': 4.9,
 };
 
 const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
@@ -82,12 +82,11 @@ const CustomerFavourites: React.FC = () => {
                   alt={item.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                {/* Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+                {/* No gradient overlay — image shows fully clear */}
 
                 {/* Price badge */}
                 <div className="absolute top-4 left-4 bg-[#1A1A1A] text-white font-bebas text-[18px] px-3 py-1 rounded shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
-                  ${item.price.toFixed(0)}
+                  ${item.sizes?.[0]?.price ?? item.price}
                 </div>
 
                 {/* Favourite badge */}
