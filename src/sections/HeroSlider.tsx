@@ -30,8 +30,8 @@ const Hero: React.FC = () => {
               className="font-poppins text-[24px] md:text-[36px] uppercase mb-2 animate-fade-up"
               style={{ color: '#FFFFFF', fontWeight: 600, letterSpacing: '3px', textShadow: '0 2px 12px rgba(0,0,0,0.6)', animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              HOT &amp; FRESH
-            </h3>
+                 DELICIOUS
+          </h3>
             <h1
               className="font-poppins text-[70px] md:text-[110px] lg:text-[130px] font-900 leading-[0.95] mb-4 uppercase animate-fade-up tracking-[-0.02em]"
               style={{ color: '#FFFFFF', textShadow: '0 4px 24px rgba(0,0,0,0.7)', animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
