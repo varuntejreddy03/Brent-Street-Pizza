@@ -30,19 +30,19 @@ const Hero: React.FC = () => {
               className="font-poppins text-[24px] md:text-[36px] uppercase mb-2 animate-fade-up"
               style={{ color: '#FFFFFF', fontWeight: 600, letterSpacing: '3px', textShadow: '0 2px 12px rgba(0,0,0,0.6)', animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
             >
-                 DELICIOUS
+              Hot &amp; Fresh
           </h3>
             <h1
               className="font-poppins text-[70px] md:text-[110px] lg:text-[130px] font-900 leading-[0.95] mb-4 uppercase animate-fade-up tracking-[-0.02em]"
               style={{ color: '#FFFFFF', textShadow: '0 4px 24px rgba(0,0,0,0.7)', animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              PIZZA
+              Pizza
             </h1>
             <p
               className="font-poppins text-[20px] md:text-[28px] font-700 tracking-normal mb-10 animate-fade-up"
               style={{ color: 'rgba(255, 255, 255, 0.90)', textShadow: '0 2px 8px rgba(0,0,0,0.6)', animationDelay: '0.3s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              Made Daily in Store
+               Made to Order.
             </p>
 
             {/* CTA Buttons */}
