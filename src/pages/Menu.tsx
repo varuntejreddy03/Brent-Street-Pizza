@@ -351,11 +351,14 @@ export default function Menu() {
     const params = new URLSearchParams(location.search);
     const cat = params.get('cat');
     const tab = params.get('tab');
+    const hash = location.hash.replace('#', '');
     if (tab === 'delivery') {
       setOrderType('delivery');
       setIsCartOpen(true);
     }
-    if (cat) {
+    if (hash) {
+      setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    } else if (cat) {
       setTimeout(() => document.getElementById(cat)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     } else {
       window.scrollTo(0, 0);
