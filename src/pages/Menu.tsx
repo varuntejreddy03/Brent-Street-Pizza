@@ -243,7 +243,8 @@ function TripleSundaeCard() {
   const [open, setOpen] = useState(false);
   const toggleFlavour = (f: string) => setSelectedFlavours(p => p.includes(f) ? p.filter(x => x !== f) : p.length < 3 ? [...p, f] : p);
   const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
-  const total = 10 + selectedToppings.length * 0.75;
+  const extraToppings = Math.max(0, selectedToppings.length - 3);
+  const total = 10 + extraToppings * 0.75;
 
   return (
     <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
@@ -280,15 +281,21 @@ function TripleSundaeCard() {
               </div>
             </div>
             <div>
-              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Toppings <span className="font-400 normal-case">(+75c each)</span></p>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Toppings <span className="font-400 normal-case">(3 included, +75c each after)</span></p>
               <div className="flex flex-wrap gap-1.5">
-                {IC_TOPPINGS.map(t => (
-                  <button key={t} onClick={() => toggleTopping(t)}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
-                      selectedToppings.includes(t) ? 'bg-[#D4952A] border-[#D4952A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#D4952A]/50'}`}>
-                    {selectedToppings.includes(t) && <Check className="w-3 h-3" strokeWidth={3} />}{t}
-                  </button>
-                ))}
+                {IC_TOPPINGS.map((t) => {
+                  const active = selectedToppings.includes(t);
+                  const isExtra = active && selectedToppings.indexOf(t) >= 3;
+                  return (
+                    <button key={t} onClick={() => toggleTopping(t)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                        active ? (isExtra ? 'bg-[#D4952A] border-[#D4952A] text-white' : 'bg-[#C8201A] border-[#C8201A] text-white') :
+                        'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#D4952A]/50'}`}>
+                      {active && <Check className="w-3 h-3" strokeWidth={3} />}
+                      {t}{isExtra ? ' +75c' : ''}
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <div>
