@@ -66,10 +66,9 @@ const CategorySection: React.FC = () => {
             <div className="relative z-10 p-8 flex flex-col gap-1">
               <div className="flex items-center gap-3 mb-2">
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                  style={{ background: `${cat.color}30`, border: `1px solid ${cat.color}50` }}
+                  className="w-12 h-12 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm border border-white/30"
                 >
-                  <cat.icon className="w-5 h-5" style={{ color: cat.color }} strokeWidth={1.5} />
+                  <cat.icon className="w-6 h-6 text-white" strokeWidth={1.5} />
                 </div>
               </div>
               <h3 className="font-bebas text-[40px] md:text-[48px] leading-none text-white tracking-wider group-hover:translate-x-1 transition-transform duration-300">

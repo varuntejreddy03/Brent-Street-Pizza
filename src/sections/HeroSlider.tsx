@@ -47,20 +47,20 @@ const Hero: React.FC = () => {
 
             {/* CTA Buttons */}
             <div
-              className="flex justify-center md:justify-start items-center gap-3 sm:gap-4 md:gap-6 animate-fade-up w-full px-4 md:px-0"
+              className="flex flex-col sm:flex-row justify-center md:justify-start items-stretch sm:items-center gap-3 animate-fade-up w-full px-4 md:px-0"
               style={{ animationDelay: '0.4s', opacity: 0, animationFillMode: 'forwards' }}
             >
               <Link
                 to="/menu"
                 id="hero-order-pickup"
-                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[15px] sm:text-[16px] md:text-[18px] tracking-widest px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 md:py-4 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 w-full sm:w-auto active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d,0_0px_0_rgba(0,0,0,0.5)] uppercase border border-[#f87171]/20"
+                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[14px] sm:text-[16px] md:text-[18px] tracking-widest px-6 sm:px-6 md:px-8 py-3.5 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 whitespace-nowrap active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d] uppercase border border-[#f87171]/20"
               >
                 ORDER PICKUP <span className="text-xl">›</span>
               </Link>
               <Link
                 to="/menu?tab=delivery"
                 id="hero-order-delivery"
-                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[15px] sm:text-[16px] md:text-[18px] tracking-widest px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 md:py-4 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 w-full sm:w-auto active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d,0_0px_0_rgba(0,0,0,0.5)] uppercase border border-[#f87171]/20"
+                className="bg-gradient-to-b from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c] text-white font-barlow font-800 text-[14px] sm:text-[16px] md:text-[18px] tracking-widest px-6 sm:px-6 md:px-8 py-3.5 rounded shadow-[0_4px_0_#7f1d1d,0_8px_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 transition-all duration-300 whitespace-nowrap active:translate-y-1 active:shadow-[0_0px_0_#7f1d1d] uppercase border border-[#f87171]/20"
               >
                 ORDER DELIVERY <span className="text-xl">›</span>
               </Link>
