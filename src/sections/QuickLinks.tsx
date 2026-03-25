@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Pizza, Tag, CupSoda } from 'lucide-react';
+import { Pizza, Tag, CakeSlice } from 'lucide-react';
 
 const QuickLinks: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const QuickLinks: React.FC = () => {
           
           {/* PIZZA */}
           <Link 
-            to="/menu?cat=pizza" 
+            to="/menu?cat=cat-classic-pizza" 
             className="flex flex-col items-center justify-center py-4 px-2 hover:bg-black/5 transition-colors border-r border-[#E8D8C8]"
           >
             <div className="mb-2 text-black flex items-center justify-center pb-2 border-b-2 border-transparent w-full">
@@ -49,19 +49,19 @@ const QuickLinks: React.FC = () => {
             </p>
           </Link>
 
-          {/* DRINKS */}
+          {/* DESSERTS */}
           <Link 
-            to="/menu?cat=drinks" 
+            to="/menu?cat=cat-desserts" 
             className="flex flex-col items-center justify-center py-4 px-2 hover:bg-black/5 transition-colors"
           >
             <div className="mb-2 text-black flex items-center justify-center">
-              <CupSoda className="w-12 h-12 stroke-[1.5]" />
+              <CakeSlice className="w-12 h-12 stroke-[1.5]" />
             </div>
             <h3 className="font-bebas text-black text-[22px] md:text-[28px] leading-none mb-1 tracking-wide">
-              DRINKS
+              DESSERTS
             </h3>
             <p className="font-barlow text-black/70 text-[11px] md:text-[13px] font-600 uppercase tracking-wide text-center">
-              Shakes & Beverages
+              Sweet Indulgence
             </p>
           </Link>
 

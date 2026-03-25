@@ -21,7 +21,7 @@ const IC_FLAVOURS = ['Vanilla', 'Chocolate', 'Strawberry', 'Cookies & Cream', 'R
 const IC_TOPPINGS = ["M&M's", 'Rainbow Sprinkles', 'Oreo Chunks', 'Waffle Stick', 'Crushed Cadbury Flake'];
 const IC_SAUCES = ['Chocolate', 'Strawberry', 'Caramel'];
 
-function IceCreamBuilder() {
+function IceCreamBuilder({ onAddToCart }: { onAddToCart: (item: MenuItem, customs: any) => void }) {
   const [selectedScoop, setSelectedScoop] = useState<number | null>(null);
   const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
@@ -34,6 +34,28 @@ function IceCreamBuilder() {
   };
   const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
   const total = selectedScoop !== null ? IC_SCOOPS[selectedScoop].price + selectedToppings.length * 0.75 : 0;
+
+  const handleAdd = () => {
+    if (selectedScoop === null) return;
+    const item: MenuItem = {
+      id: 'ice-cream-custom',
+      categoryId: 'cat-ice-cream',
+      name: 'Custom Ice Cream',
+      description: `${IC_SCOOPS[selectedScoop].label} with ${selectedFlavours.join(', ')}`,
+      price: total,
+      image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=90',
+      tags: {}
+    };
+    onAddToCart(item, {
+      size: IC_SCOOPS[selectedScoop].label,
+      price: total,
+      addedExtras: [
+        ...selectedFlavours.map(f => ({ name: f, price: 0 })),
+        ...selectedToppings.map(t => ({ name: t, price: 0.75 })),
+        ...(selectedSauce ? [{ name: selectedSauce, price: 0 }] : [])
+      ]
+    });
+  };
 
   return (
     <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
@@ -116,8 +138,10 @@ function IceCreamBuilder() {
               <p className="font-bebas text-[26px] text-[#1A1A1A] leading-none">${total.toFixed(2)}</p></>
             )}
           </div>
-          <button disabled={selectedScoop === null || selectedFlavours.length === 0}
-            className="flex items-center gap-2 bg-[#C8201A] hover:bg-[#9E1510] disabled:opacity-40 disabled:cursor-not-allowed text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all shadow-[0_4px_16px_rgba(200,32,26,0.3)]">
+          <button 
+            disabled={selectedScoop === null || selectedFlavours.length === 0}
+            onClick={handleAdd}
+            className="flex items-center gap-2 bg-[#C8201A] hover:bg-[#9E1510] disabled:opacity-40 disabled:cursor-not-allowed text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all shadow-[0_4px_16px_rgba(200,32,26,0.35)]">
             <Plus className="w-4 h-4" /> Add to Order
           </button>
         </div>
@@ -126,7 +150,7 @@ function IceCreamBuilder() {
   );
 }
 
-function BananaSplitCard() {
+function BananaSplitCard({ onAddToCart }: { onAddToCart: (item: MenuItem, customs: any) => void }) {
   const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const [selectedSauce, setSelectedSauce] = useState<string | null>(null);
@@ -137,6 +161,26 @@ function BananaSplitCard() {
   // First 3 toppings included, each extra is +$0.75
   const extraToppings = Math.max(0, selectedToppings.length - 3);
   const total = 12 + extraToppings * 0.75;
+
+  const handleAdd = () => {
+    const item: MenuItem = {
+      id: 'ice-cream-banana-split',
+      categoryId: 'cat-ice-cream',
+      name: 'Banana Split',
+      description: 'Fresh banana, 3 scoops, whipped cream, and sprinkles.',
+      price: total,
+      image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80',
+      tags: {}
+    };
+    onAddToCart(item, {
+      price: total,
+      addedExtras: [
+        ...selectedFlavours.map(f => ({ name: f, price: 0 })),
+        ...selectedToppings.map((t) => ({ name: t, price: selectedToppings.indexOf(t) >= 3 ? 0.75 : 0 })),
+        ...(selectedSauce ? [{ name: selectedSauce, price: 0 }] : [])
+      ]
+    });
+  };
 
   return (
     <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
@@ -227,7 +271,9 @@ function BananaSplitCard() {
 
         <div className="flex items-center justify-between pt-3 border-t border-[#E8D8C8]">
           <span className="font-bebas text-[24px] text-[#1A1A1A]">${total.toFixed(2)}</span>
-          <button className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
+          <button 
+            onClick={handleAdd}
+            className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
             <Plus className="w-4 h-4" /> Add to Order
           </button>
         </div>
@@ -236,7 +282,7 @@ function BananaSplitCard() {
   );
 }
 
-function TripleSundaeCard() {
+function TripleSundaeCard({ onAddToCart }: { onAddToCart: (item: MenuItem, customs: any) => void }) {
   const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const [selectedSauce, setSelectedSauce] = useState<string | null>(null);
@@ -245,6 +291,26 @@ function TripleSundaeCard() {
   const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
   const extraToppings = Math.max(0, selectedToppings.length - 3);
   const total = 10 + extraToppings * 0.75;
+
+  const handleAdd = () => {
+    const item: MenuItem = {
+      id: 'ice-cream-triple-sundae',
+      categoryId: 'cat-ice-cream',
+      name: 'Triple Sundae',
+      description: '3 scoops with 3 toppings and sauce.',
+      price: total,
+      image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80',
+      tags: {}
+    };
+    onAddToCart(item, {
+      price: total,
+      addedExtras: [
+        ...selectedFlavours.map(f => ({ name: f, price: 0 })),
+        ...selectedToppings.map((t) => ({ name: t, price: selectedToppings.indexOf(t) >= 3 ? 0.75 : 0 })),
+        ...(selectedSauce ? [{ name: selectedSauce, price: 0 }] : [])
+      ]
+    });
+  };
 
   return (
     <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
@@ -314,7 +380,9 @@ function TripleSundaeCard() {
         )}
         <div className="flex items-center justify-between">
           <span className="font-bebas text-[24px] text-[#1A1A1A]">${total.toFixed(2)}</span>
-          <button className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
+          <button 
+            onClick={handleAdd}
+            className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
             <Plus className="w-4 h-4" /> Add to Order
           </button>
         </div>
@@ -674,13 +742,13 @@ export default function Menu() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
 
             {/* ── Build Your Ice Cream ── */}
-            <IceCreamBuilder />
+            <IceCreamBuilder onAddToCart={(item, customs) => { addToCart(item, customs); setIsCartOpen(true); }} />
 
             {/* ── Banana Split ── */}
-            <BananaSplitCard />
+            <BananaSplitCard onAddToCart={(item, customs) => { addToCart(item, customs); setIsCartOpen(true); }} />
 
             {/* ── Triple Sundae ── */}
-            <TripleSundaeCard />
+            <TripleSundaeCard onAddToCart={(item, customs) => { addToCart(item, customs); setIsCartOpen(true); }} />
 
           </div>
         </div>

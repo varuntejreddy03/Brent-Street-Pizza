@@ -114,19 +114,16 @@ const Footer: React.FC = () => {
           {/* StaffArc credit */}
           <p className="font-inter text-[12px] text-[#CCCCCC]/60 flex items-center gap-1.5">
             Made with{' '}
-            <span className="text-[#C8201A]">♥</span>
-            {' '}by{' '}
             <a
               href="https://staffarc.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-[#F97316] hover:text-[#FB923C] transition-colors flex items-center gap-1"
+              className="flex items-center gap-1.5 font-semibold text-[#F97316] hover:text-[#FB923C] transition-colors"
             >
-              <img
-                src="https://staffarc.com/favicon.ico"
-                alt="StaffArc"
-                className="w-3.5 h-3.5 rounded-sm"
-                onError={(e) => (e.currentTarget.style.display = 'none')}
+              <img 
+                src="/staffarc-logo.png" 
+                alt="StaffArc" 
+                className="h-5 w-auto object-contain" 
               />
               StaffArc
             </a>

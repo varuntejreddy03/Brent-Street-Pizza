@@ -102,6 +102,8 @@ const CATEGORIES = [
   { id: 'cat-seafood-pizza', name: 'Seafood Pizza', iconName: 'Fish' },
   { id: 'cat-chicken-pizza', name: 'Chicken Pizza', iconName: 'Drumstick' },
   { id: 'cat-vegetarian-pizza', name: 'Vegetarian Pizza', iconName: 'Leaf' },
+  { id: 'cat-desserts', name: 'Desserts', iconName: 'CakeSlice' },
+  { id: 'cat-ice-cream', name: 'Ice Cream', iconName: 'IceCream' },
 ];
 
 const PIZZA_SIZES = [
@@ -324,16 +326,75 @@ const MENU_ITEMS = [
     image: 'https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&q=80',
     tags: { isVegan: true },
   },
+
+  // ── Desserts ──────────────────────────────────────────────────────────────
+  {
+    id: 'dessert-tiramisu',
+    categoryId: 'cat-desserts',
+    name: 'Classic Tiramisu',
+    description: 'Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone.',
+    price: 8.5,
+    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80',
+    tags: { isFavorite: true },
+  },
+  {
+    id: 'dessert-brownie',
+    categoryId: 'cat-desserts',
+    name: 'Choco Fudge Brownie',
+    description: 'Warm, gooey chocolate brownie served with a drizzle of chocolate sauce.',
+    price: 6.5,
+    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80',
+    tags: {},
+  },
+
+  // ── Ice Cream ──────────────────────────────────────────────────────────────
+  {
+    id: 'ice-cream-custom',
+    categoryId: 'cat-ice-cream',
+    name: 'Custom Ice Cream',
+    description: 'Build your own artisan ice cream with your choice of scoops, flavours, and toppings.',
+    price: 4,
+    image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'ice-cream-banana-split',
+    categoryId: 'cat-ice-cream',
+    name: 'Banana Split',
+    description: 'Fresh banana, 3 scoops of ice cream, whipped cream, and sprinkles.',
+    price: 12,
+    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'ice-cream-triple-sundae',
+    categoryId: 'cat-ice-cream',
+    name: 'Triple Sundae',
+    description: '3 scoops of your favourite flavours with 3 toppings and sauce.',
+    price: 10,
+    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80',
+    tags: {},
+  },
 ];
 
 async function main() {
+  console.log('Cleaning up old data...');
+  // Remove drinks category and products totally
+  await prisma.cartItem.deleteMany({ where: { product: { categoryId: 'cat-drinks' } } });
+  await prisma.orderItem.deleteMany({ where: { product: { categoryId: 'cat-drinks' } } });
+  await prisma.product.deleteMany({ where: { categoryId: 'cat-drinks' } });
+  await prisma.category.deleteMany({ where: { id: 'cat-drinks' } });
+
   console.log('Seeding Database...');
 
   // 1. Seed Categories
   for (const cat of CATEGORIES) {
     await prisma.category.upsert({
       where: { id: cat.id },
-      update: {},
+      update: {
+        name: cat.name,
+        iconName: cat.iconName
+      },
       create: {
         id: cat.id,
         name: cat.name,
@@ -347,7 +408,10 @@ async function main() {
   for (const extra of PIZZA_EXTRAS) {
     await prisma.pizzaExtra.upsert({
       where: { id: extra.id },
-      update: {},
+      update: {
+        name: extra.name,
+        options: extra.options
+      },
       create: {
         id: extra.id,
         name: extra.name,
@@ -361,7 +425,17 @@ async function main() {
   for (const item of MENU_ITEMS) {
     await prisma.product.upsert({
       where: { id: item.id },
-      update: {},
+      update: {
+        categoryId: item.categoryId,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        image: item.image,
+        tags: item.tags || {},
+        sizes: item.sizes ? JSON.parse(JSON.stringify(item.sizes)) : null,
+        toppings: item.toppings ? JSON.parse(JSON.stringify(item.toppings)) : null,
+        hasPizzaExtras: item.hasPizzaExtras ?? false
+      },
       create: {
         id: item.id,
         categoryId: item.categoryId,

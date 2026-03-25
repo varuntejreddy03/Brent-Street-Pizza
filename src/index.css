@@ -445,6 +445,16 @@
   50%       { box-shadow: 0 8px 32px -4px rgba(200, 32, 26,0.75); }
 }
 
+/* bounce subtle for success page */
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 2.5s ease-in-out infinite;
+}
+
 /* Card image scale utility */
 .group-hover\:scale-108:hover img,
 .group:hover .group-hover\:scale-108 {

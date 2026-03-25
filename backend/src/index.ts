@@ -1,13 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import catalogRoutes from './routes/catalog';
 import cartRoutes from './routes/cart';
 import orderRoutes from './routes/orders';
 import paymentRoutes from './routes/payments';
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
