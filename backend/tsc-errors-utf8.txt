@@ -1,0 +1,5 @@
+﻿src/config/db.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/config/supabase.ts(1,30): error TS2307: Cannot find module '@supabase/supabase-js' or its corresponding type declarations.
+src/controllers/cartController.ts(14,45): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/controllers/orderController.ts(29,53): error TS7006: Parameter 'tx' implicitly has an 'any' type.
+src/controllers/orderController.ts(41,44): error TS7006: Parameter 'item' implicitly has an 'any' type.

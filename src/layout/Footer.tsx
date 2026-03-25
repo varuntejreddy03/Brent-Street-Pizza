@@ -110,10 +110,32 @@ const Footer: React.FC = () => {
         <div className="divider-gold mb-8" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div className="flex flex-col items-center gap-3 text-center">
+          {/* StaffArc credit */}
+          <p className="font-inter text-[12px] text-[#CCCCCC]/60 flex items-center gap-1.5">
+            Made with{' '}
+            <span className="text-[#C8201A]">♥</span>
+            {' '}by{' '}
+            <a
+              href="https://staffarc.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#F97316] hover:text-[#FB923C] transition-colors flex items-center gap-1"
+            >
+              <img
+                src="https://staffarc.com/favicon.ico"
+                alt="StaffArc"
+                className="w-3.5 h-3.5 rounded-sm"
+                onError={(e) => (e.currentTarget.style.display = 'none')}
+              />
+              StaffArc
+            </a>
+          </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
           <p className="font-barlow text-[11px] font-600 text-[#CCCCCC] tracking-[0.15em] uppercase">
             © {new Date().getFullYear()} Brent Street Pizza — All Rights Reserved
           </p>
+
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/contact" className="font-barlow text-[11px] text-[#CCCCCC] hover:text-[#C8201A] transition-colors tracking-widest uppercase">Privacy Policy</Link>
             <Link to="/contact" className="font-barlow text-[11px] text-[#CCCCCC] hover:text-[#C8201A] transition-colors tracking-widest uppercase">Terms of Service</Link>
@@ -126,6 +148,7 @@ const Footer: React.FC = () => {
             >
               Also on Uber Eats
             </a>
+          </div>
           </div>
         </div>
       </div>
