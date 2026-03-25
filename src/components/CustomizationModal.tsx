@@ -73,9 +73,9 @@ const CustomizationModal: React.FC<Props> = ({
 
   // ── Derived values ──────────────────────────────────────────────────────────
   const sizeObj = item.sizes?.find(s => s.name === selectedSize);
-  const basePrice = sizeObj?.price ?? item.price;
+  const basePrice = Number(sizeObj?.price ?? item.price);
   let extrasTotal = 0;
-  addedExtras.forEach(e => { extrasTotal += e.price; });
+  addedExtras.forEach(e => { extrasTotal += Number(e.price); });
   const orderTotal = (basePrice + extrasTotal) * quantity;
   const rating = RATINGS[item.id] ?? 4.8;
   const pizzaExtras = item.hasPizzaExtras ? extras : [];

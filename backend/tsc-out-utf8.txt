@@ -1,0 +1,6 @@
+﻿src/controllers/cartController.ts(73,16): error TS2322: Type 'string | string[]' is not assignable to type 'string | UuidFilter<"CartItem"> | undefined'.
+  Type 'string[]' is not assignable to type 'string | UuidFilter<"CartItem"> | undefined'.
+src/controllers/cartController.ts(83,62): error TS2322: Type 'string | string[]' is not assignable to type 'string | undefined'.
+  Type 'string[]' is not assignable to type 'string'.
+src/controllers/cartController.ts(97,16): error TS2322: Type 'string | string[]' is not assignable to type 'string | UuidFilter<"CartItem"> | undefined'.
+  Type 'string[]' is not assignable to type 'string | UuidFilter<"CartItem"> | undefined'.

@@ -11,6 +11,7 @@ import Menu from './pages/Menu';
 import ContactUs from './pages/ContactUs';
 import About from './pages/About';
 import Deals from './pages/Deals';
+import Checkout from './pages/Checkout';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/menu" element={<Menu />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/deals" element={<Deals />} />

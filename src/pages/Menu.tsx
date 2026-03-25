@@ -17,7 +17,7 @@ const BADGES: Record<string, { label: string; color: string }> = {
 
 export default function Menu() {
   const { cartItems, addToCart, incrementItem, decrementItem, cartTotalItems, cartTotalPrice } = useCart();
-  const { categories, menuItems } = useMenu();
+  const { categories, menuItems, isLoading } = useMenu();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [customizingItem, setCustomizingItem] = useState<MenuItem | null>(null);
   const [preselectedSize, setPreselectedSize] = useState<string>('');
@@ -26,7 +26,7 @@ export default function Menu() {
   const [orderType, setOrderType] = useState<'pickup' | 'delivery'>('pickup');
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
-  const [activeCategory, setActiveCategory] = useState(categories[0]?.id || '');
+  const [activeCategory, setActiveCategory] = useState('');
 
   // Scroll progress bar
   useEffect(() => {
@@ -38,6 +38,13 @@ export default function Menu() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Set initial activeCategory once data loads
+  useEffect(() => {
+    if (categories.length > 0 && !activeCategory) {
+      setActiveCategory(categories[0].id);
+    }
+  }, [categories, activeCategory]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -84,6 +91,31 @@ export default function Menu() {
       setTimeout(() => setJustAdded(null), 1800);
     }
   };
+
+  // Show loading skeleton while fetching from API
+  if (isLoading) {
+    return (
+      <div className="bg-[#FDF8F2] min-h-screen flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-16 h-16 rounded-full border-4 border-[#E8D8C8] border-t-[#C8201A] animate-spin" />
+          <p className="font-barlow text-[13px] font-700 uppercase tracking-widest text-[#555555]">Loading Menu...</p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 px-6 mt-8 w-full max-w-5xl">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl overflow-hidden border border-[#E8D8C8] animate-pulse">
+              <div className="h-40 bg-[#E8D8C8]/60" />
+              <div className="p-4 space-y-2">
+                <div className="h-4 bg-[#E8D8C8]/60 rounded w-3/4" />
+                <div className="h-3 bg-[#E8D8C8]/40 rounded w-full" />
+                <div className="h-3 bg-[#E8D8C8]/40 rounded w-2/3" />
+                <div className="h-9 bg-[#E8D8C8]/60 rounded-xl mt-3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#FDF8F2] min-h-screen text-[#2B2B2B] relative">
