@@ -11,6 +11,7 @@ import Menu from './pages/Menu';
 import ContactUs from './pages/ContactUs';
 import About from './pages/About';
 import Deals from './pages/Deals';
+import IceCream from './pages/IceCream';
 import Checkout from './pages/Checkout';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/deals" element={<Deals />} />
+                <Route path="/icecream" element={<IceCream />} />
               </Routes>
             </main>
 
