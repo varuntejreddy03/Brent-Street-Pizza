@@ -100,6 +100,7 @@ export const CATEGORIES: MenuCategory[] = [
   { id: 'cat-seafood-pizza', name: 'Seafood Pizza', iconName: 'Fish' },
   { id: 'cat-chicken-pizza', name: 'Chicken Pizza', iconName: 'Drumstick' },
   { id: 'cat-vegetarian-pizza', name: 'Vegetarian Pizza', iconName: 'Leaf' },
+  { id: 'cat-desserts', name: 'Desserts', iconName: 'CakeSlice' },
 ];
 
 const PIZZA_SIZES = [
@@ -321,6 +322,61 @@ export const MENU_ITEMS: MenuItem[] = [
     hasPizzaExtras: true,
     image: 'https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&q=80',
     tags: { isVegan: true },
+  },
+  // ── Desserts ─────────────────────────────────────────────────────────────
+  {
+    id: 'dessert-garlic-bread',
+    categoryId: 'cat-desserts',
+    name: 'Garlic Bread',
+    description: 'Toasted bread with garlic butter and herbs.',
+    price: 5,
+    image: 'https://images.unsplash.com/photo-1619535860434-cf9b902a0e9e?w=600&q=80',
+    tags: { isVegan: false },
+  },
+  {
+    id: 'dessert-choc-lava',
+    categoryId: 'cat-desserts',
+    name: 'Chocolate Lava Cake',
+    description: 'Warm chocolate cake with a gooey molten centre. Served with vanilla ice cream.',
+    price: 8,
+    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'dessert-churros',
+    categoryId: 'cat-desserts',
+    name: 'Churros',
+    description: 'Crispy cinnamon churros served with chocolate dipping sauce.',
+    price: 7,
+    image: 'https://images.unsplash.com/photo-1624371414361-e670edf4898a?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'dessert-tiramisu',
+    categoryId: 'cat-desserts',
+    name: 'Tiramisu',
+    description: 'Classic Italian tiramisu with mascarpone, espresso-soaked ladyfingers and cocoa.',
+    price: 9,
+    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'dessert-nutella-pizza',
+    categoryId: 'cat-desserts',
+    name: 'Nutella Pizza',
+    description: 'Pizza base topped with Nutella, sliced strawberries and a dusting of icing sugar.',
+    price: 12,
+    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80',
+    tags: {},
+  },
+  {
+    id: 'dessert-cheesecake',
+    categoryId: 'cat-desserts',
+    name: 'Baked Cheesecake',
+    description: 'Rich and creamy New York-style baked cheesecake with a buttery biscuit base.',
+    price: 8,
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600&q=80',
+    tags: {},
   },
 ];
 

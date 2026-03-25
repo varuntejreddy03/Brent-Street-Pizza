@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Phone, ArrowRight, Plus, Check } from 'lucide-react';
+import { ShoppingCart, Phone, ArrowRight, Plus, Check, ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useMenu } from '../context/MenuContext';
 import { useCart } from '../context/CartContext';
@@ -14,6 +14,314 @@ const BADGES: Record<string, { label: string; color: string }> = {
   'pizza-tandoori-chicken': { label: "CHEF'S PICK", color: 'from-[#D4952A] to-[#D4952A]' },
   'pizza-margherita':    { label: 'CLASSIC', color: 'from-[#D4952A] to-[#D4952A]' },
 };
+
+// ── Ice Cream Data ──────────────────────────────────────────────────────────
+const IC_SCOOPS = [{ label: '1 Scoop', price: 4 }, { label: '2 Scoops', price: 6 }, { label: '3 Scoops', price: 8 }];
+const IC_FLAVOURS = ['Vanilla', 'Chocolate', 'Strawberry', 'Cookies & Cream', 'Rainbow', 'Bubble Gum', 'Salted Caramel', 'Lemon Sorbet', 'Boysenberry'];
+const IC_TOPPINGS = ["M&M's", 'Rainbow Sprinkles', 'Oreo Chunks', 'Waffle Stick', 'Crushed Cadbury Flake'];
+const IC_SAUCES = ['Chocolate', 'Strawberry', 'Caramel'];
+
+function IceCreamBuilder() {
+  const [selectedScoop, setSelectedScoop] = useState<number | null>(null);
+  const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+  const [selectedSauce, setSelectedSauce] = useState<string | null>(null);
+  const maxFlavours = selectedScoop !== null ? selectedScoop + 1 : 0;
+
+  const toggleFlavour = (f: string) => {
+    if (selectedFlavours.includes(f)) setSelectedFlavours(p => p.filter(x => x !== f));
+    else if (selectedFlavours.length < maxFlavours) setSelectedFlavours(p => [...p, f]);
+  };
+  const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
+  const total = selectedScoop !== null ? IC_SCOOPS[selectedScoop].price + selectedToppings.length * 0.75 : 0;
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+      <div className="bg-[#FDF8F2] border-b border-[#E8D8C8] px-5 py-4">
+        <h3 className="font-bebas text-[24px] tracking-wider text-[#1A1A1A]">🍨 Build Your Ice Cream</h3>
+      </div>
+      <div className="p-5 space-y-6">
+        {/* Step 1 */}
+        <div>
+          <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.22em] text-[#C8201A] mb-2">Step 1 — Choose Scoops</p>
+          <div className="space-y-1.5">
+            {IC_SCOOPS.map((s, i) => (
+              <button key={s.label} onClick={() => { setSelectedScoop(i); setSelectedFlavours([]); }}
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl border-2 transition-all ${
+                  selectedScoop === i ? 'border-[#C8201A] bg-[#C8201A]/6' : 'border-[#E8D8C8] bg-[#FDF8F2] hover:border-[#C8201A]/40'}`}>
+                <span className="flex items-center gap-3">
+                  <span className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedScoop === i ? 'border-[#C8201A]' : 'border-[#CCCCCC]'}`}>
+                    {selectedScoop === i && <span className="w-2 h-2 rounded-full bg-[#C8201A]" />}
+                  </span>
+                  <span className="font-inter text-[13px] font-600 text-[#1A1A1A]">{s.label}</span>
+                </span>
+                <span className="font-bebas text-[17px] text-[#C8201A]">${s.price}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Step 2 */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.22em] text-[#C8201A]">Step 2 — Choose Flavours</p>
+            {selectedScoop !== null && <span className="font-inter text-[11px] text-[#555555]">{selectedFlavours.length}/{maxFlavours}</span>}
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {IC_FLAVOURS.map(f => {
+              const active = selectedFlavours.includes(f);
+              const disabled = !active && selectedFlavours.length >= maxFlavours;
+              return (
+                <button key={f} onClick={() => toggleFlavour(f)} disabled={disabled}
+                  className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                    active ? 'bg-[#C8201A] border-[#C8201A] text-white' :
+                    disabled ? 'border-[#E8D8C8] text-[#CCCCCC] cursor-not-allowed bg-[#FDF8F2]' :
+                    'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#C8201A]/50'}`}>
+                  {active && <Check className="w-3 h-3" strokeWidth={3} />}{f}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        {/* Step 3 */}
+        <div>
+          <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.22em] text-[#C8201A] mb-2">Step 3 — Toppings <span className="text-[#555555] normal-case font-400">(+75c each)</span></p>
+          <div className="flex flex-wrap gap-1.5">
+            {IC_TOPPINGS.map(t => (
+              <button key={t} onClick={() => toggleTopping(t)}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                  selectedToppings.includes(t) ? 'bg-[#D4952A] border-[#D4952A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#D4952A]/50'}`}>
+                {selectedToppings.includes(t) && <Check className="w-3 h-3" strokeWidth={3} />}{t}
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Step 4 */}
+        <div>
+          <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.22em] text-[#C8201A] mb-2">Step 4 — Sauce <span className="text-[#555555] normal-case font-400">(Free)</span></p>
+          <div className="flex flex-wrap gap-1.5">
+            {IC_SAUCES.map(s => (
+              <button key={s} onClick={() => setSelectedSauce(selectedSauce === s ? null : s)}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                  selectedSauce === s ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#1A1A1A]/40'}`}>
+                {selectedSauce === s && <Check className="w-3 h-3" strokeWidth={3} />}{s}
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Add to Order */}
+        <div className="border-t border-[#E8D8C8] pt-4 flex items-center justify-between gap-3">
+          <div>
+            {selectedScoop !== null && (
+              <><p className="font-inter text-[11px] text-[#555555]">{IC_SCOOPS[selectedScoop].label}{selectedToppings.length > 0 && ` + ${selectedToppings.length} topping${selectedToppings.length > 1 ? 's' : ''}`}</p>
+              <p className="font-bebas text-[26px] text-[#1A1A1A] leading-none">${total.toFixed(2)}</p></>
+            )}
+          </div>
+          <button disabled={selectedScoop === null || selectedFlavours.length === 0}
+            className="flex items-center gap-2 bg-[#C8201A] hover:bg-[#9E1510] disabled:opacity-40 disabled:cursor-not-allowed text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all shadow-[0_4px_16px_rgba(200,32,26,0.3)]">
+            <Plus className="w-4 h-4" /> Add to Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BananaSplitCard() {
+  const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+  const [selectedSauce, setSelectedSauce] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const toggleFlavour = (f: string) => setSelectedFlavours(p => p.includes(f) ? p.filter(x => x !== f) : p.length < 3 ? [...p, f] : p);
+  const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
+  // First 3 toppings included, each extra is +$0.75
+  const extraToppings = Math.max(0, selectedToppings.length - 3);
+  const total = 12 + extraToppings * 0.75;
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+      <div className="relative h-52 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80" alt="Banana Split" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <h3 className="font-bebas text-[28px] text-white tracking-wider leading-none">Banana Split</h3>
+          <span className="font-bebas text-[22px] text-[#D4952A]">$12</span>
+        </div>
+      </div>
+      <div className="p-5">
+        {/* Included items */}
+        <ul className="space-y-1 mb-4">
+          {['Fresh Banana', 'Whipped Cream', 'Sprinkles'].map(inc => (
+            <li key={inc} className="flex items-center gap-2 font-inter text-[12px] text-[#555555]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8201A] flex-shrink-0" />{inc}
+            </li>
+          ))}
+        </ul>
+
+        {/* Customise toggle */}
+        <button onClick={() => setOpen(o => !o)}
+          className="w-full flex items-center justify-between mb-3 font-barlow text-[11px] font-700 uppercase tracking-wider text-[#C8201A]">
+          Customise Your Split
+          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        </button>
+
+        {open && (
+          <div className="space-y-4 mb-4">
+            {/* Flavours */}
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">
+                3 Scoops — Choose Flavours <span className="text-[#C8201A]">{selectedFlavours.length}/3</span>
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {IC_FLAVOURS.map(f => {
+                  const active = selectedFlavours.includes(f);
+                  const disabled = !active && selectedFlavours.length >= 3;
+                  return (
+                    <button key={f} onClick={() => toggleFlavour(f)} disabled={disabled}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                        active ? 'bg-[#C8201A] border-[#C8201A] text-white' :
+                        disabled ? 'border-[#E8D8C8] text-[#CCCCCC] cursor-not-allowed bg-[#FDF8F2]' :
+                        'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#C8201A]/50'}`}>
+                      {active && <Check className="w-3 h-3" strokeWidth={3} />}{f}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* Toppings */}
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-1">
+                Toppings <span className="font-400 normal-case text-[#555555]">(3 included, +75c each after)</span>
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {IC_TOPPINGS.map((t, i) => {
+                  const active = selectedToppings.includes(t);
+                  const isExtra = active && selectedToppings.indexOf(t) >= 3;
+                  return (
+                    <button key={t} onClick={() => toggleTopping(t)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                        active ? (isExtra ? 'bg-[#D4952A] border-[#D4952A] text-white' : 'bg-[#C8201A] border-[#C8201A] text-white') :
+                        'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#D4952A]/50'}`}>
+                      {active && <Check className="w-3 h-3" strokeWidth={3} />}
+                      {t}{isExtra ? ' +75c' : i < 3 ? '' : ''}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* Sauce */}
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Sauce <span className="font-400 normal-case">(Free)</span></p>
+              <div className="flex gap-2">
+                {IC_SAUCES.map(s => (
+                  <button key={s} onClick={() => setSelectedSauce(selectedSauce === s ? null : s)}
+                    className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-xl border font-inter text-[12px] transition-all ${
+                      selectedSauce === s ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#1A1A1A]/40'}`}>
+                    {selectedSauce === s && <Check className="w-3 h-3" strokeWidth={3} />}{s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between pt-3 border-t border-[#E8D8C8]">
+          <span className="font-bebas text-[24px] text-[#1A1A1A]">${total.toFixed(2)}</span>
+          <button className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
+            <Plus className="w-4 h-4" /> Add to Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TripleSundaeCard() {
+  const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+  const [selectedSauce, setSelectedSauce] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const toggleFlavour = (f: string) => setSelectedFlavours(p => p.includes(f) ? p.filter(x => x !== f) : p.length < 3 ? [...p, f] : p);
+  const toggleTopping = (t: string) => setSelectedToppings(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]);
+  const extraToppings = Math.max(0, selectedToppings.length - 3);
+  const total = 10 + extraToppings * 0.75;
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#E8D8C8] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+      <div className="relative h-52 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80" alt="Triple Sundae" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <h3 className="font-bebas text-[28px] text-white tracking-wider leading-none">Triple Sundae</h3>
+          <span className="font-bebas text-[22px] text-[#D4952A]">$10</span>
+        </div>
+      </div>
+      <div className="p-5">
+        {/* Toggle customise */}
+        <button onClick={() => setOpen(o => !o)}
+          className="w-full flex items-center justify-between mb-4 font-barlow text-[12px] font-700 uppercase tracking-wider text-[#C8201A]">
+          Customise Your Sundae
+          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        </button>
+        {open && (
+          <div className="space-y-4 mb-4">
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Choose 3 Flavours <span className="text-[#C8201A]">{selectedFlavours.length}/3</span></p>
+              <div className="flex flex-wrap gap-1.5">
+                {IC_FLAVOURS.map(f => {
+                  const active = selectedFlavours.includes(f);
+                  return (
+                    <button key={f} onClick={() => toggleFlavour(f)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                        active ? 'bg-[#C8201A] border-[#C8201A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#C8201A]/50'}`}>
+                      {active && <Check className="w-3 h-3" strokeWidth={3} />}{f}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Toppings <span className="font-400 normal-case">(3 included, +75c each after)</span></p>
+              <div className="flex flex-wrap gap-1.5">
+                {IC_TOPPINGS.map((t) => {
+                  const active = selectedToppings.includes(t);
+                  const isExtra = active && selectedToppings.indexOf(t) >= 3;
+                  return (
+                    <button key={t} onClick={() => toggleTopping(t)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                        active ? (isExtra ? 'bg-[#D4952A] border-[#D4952A] text-white' : 'bg-[#C8201A] border-[#C8201A] text-white') :
+                        'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#D4952A]/50'}`}>
+                      {active && <Check className="w-3 h-3" strokeWidth={3} />}
+                      {t}{isExtra ? ' +75c' : ''}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div>
+              <p className="font-barlow text-[11px] font-700 uppercase tracking-[0.2em] text-[#555555] mb-2">Sauce <span className="font-400 normal-case">(Free)</span></p>
+              <div className="flex flex-wrap gap-1.5">
+                {IC_SAUCES.map(s => (
+                  <button key={s} onClick={() => setSelectedSauce(selectedSauce === s ? null : s)}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-full border font-inter text-[12px] transition-all ${
+                      selectedSauce === s ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white' : 'border-[#E8D8C8] text-[#555555] bg-[#FDF8F2] hover:border-[#1A1A1A]/40'}`}>
+                    {selectedSauce === s && <Check className="w-3 h-3" strokeWidth={3} />}{s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="flex items-center justify-between">
+          <span className="font-bebas text-[24px] text-[#1A1A1A]">${total.toFixed(2)}</span>
+          <button className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#C8201A] text-white font-barlow font-800 text-[13px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all duration-300">
+            <Plus className="w-4 h-4" /> Add to Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Menu() {
   const { cartItems, addToCart, incrementItem, decrementItem, cartTotalItems, cartTotalPrice } = useCart();
@@ -50,11 +358,14 @@ export default function Menu() {
     const params = new URLSearchParams(location.search);
     const cat = params.get('cat');
     const tab = params.get('tab');
+    const hash = location.hash.replace('#', '');
     if (tab === 'delivery') {
       setOrderType('delivery');
       setIsCartOpen(true);
     }
-    if (cat) {
+    if (hash) {
+      setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    } else if (cat) {
       setTimeout(() => document.getElementById(cat)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     } else {
       window.scrollTo(0, 0);
@@ -187,6 +498,16 @@ export default function Menu() {
               {cat.name}
             </button>
           ))}
+          <button
+            onClick={() => { document.getElementById('ice-cream')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); setActiveCategory('ice-cream'); }}
+            className={`flex-shrink-0 font-barlow text-[12px] font-700 uppercase tracking-wider px-4 py-2 rounded-full border transition-all duration-250 ${
+              activeCategory === 'ice-cream'
+                ? 'bg-[#C8201A] border-[#C8201A] text-white'
+                : 'border-[#E8D8C8] text-[#555555] hover:bg-[#1A1A1A]/5'
+            }`}
+          >
+            🍨 Ice Cream
+          </button>
           <div className="ml-auto flex-shrink-0">
             <button
               onClick={() => setIsCartOpen(true)}
@@ -339,6 +660,30 @@ export default function Menu() {
             </div>
           </div>
         ))}
+
+        {/* ── Ice Cream Section ────────────────────────────────────────── */}
+        <div id="ice-cream" className="mb-24 scroll-mt-36">
+          <div className="flex items-end gap-5 mb-10">
+            <div>
+              <span className="font-barlow text-[11px] font-700 uppercase tracking-[0.3em] text-[#D4952A] block mb-1.5">— Sweet Treats —</span>
+              <h2 className="font-bebas text-[52px] md:text-[68px] text-[#1A1A1A] tracking-wider leading-none">Ice Cream</h2>
+            </div>
+            <div className="flex-grow h-px bg-gradient-to-r from-[#E8D8C8] to-transparent mb-3 hidden sm:block" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+
+            {/* ── Build Your Ice Cream ── */}
+            <IceCreamBuilder />
+
+            {/* ── Banana Split ── */}
+            <BananaSplitCard />
+
+            {/* ── Triple Sundae ── */}
+            <TripleSundaeCard />
+
+          </div>
+        </div>
 
         {/* ── Contact CTA ─────────────────────────────────────────────── */}
         <div className="relative bg-[#FFFCF7] rounded-2xl border border-[#E8D8C8] p-10 md:p-14 text-center overflow-hidden">
