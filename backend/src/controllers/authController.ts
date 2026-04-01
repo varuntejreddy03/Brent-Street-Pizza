@@ -57,11 +57,20 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user: any = await prisma.user.findUnique({ where: { email } });
+    
     if (!user) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
+
+    // DEBUG: Verify role via multiple methods
+    const rawResult: any = await prisma.$queryRaw`SELECT role FROM "User" WHERE email = ${email}`;
+    const dbRole = rawResult && rawResult[0] ? rawResult[0].role : null;
+    
+    console.log(`[DEBUG] Login attempt: ${email}`);
+    console.log(`[DEBUG] Prisma role: ${user.role}`);
+    console.log(`[DEBUG] Raw DB role: ${dbRole}`);
 
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
@@ -71,8 +80,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const token = generateToken(user.id);
     
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password_hash: _, ...safeUser } = user;
+    // Construct a safe user object explicitly
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role || dbRole || 'CUSTOMER' // Fallback to raw DB role if Prisma is stale
+    };
 
     res.status(200).json({ 
       message: 'Login successful', 

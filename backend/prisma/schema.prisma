@@ -14,6 +14,7 @@ model User {
   phone         String?
   password_hash String
   address       String?
+  role          String     @default("CUSTOMER")
   createdAt     DateTime   @default(now())
 
   cartItems     CartItem[]

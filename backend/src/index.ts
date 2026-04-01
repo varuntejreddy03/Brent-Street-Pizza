@@ -9,6 +9,7 @@ import cartRoutes from './routes/cart';
 import orderRoutes from './routes/orders';
 import paymentRoutes from './routes/payments';
 import contentRoutes from './routes/content';
+import adminRoutes from './routes/adminRoutes';
 
 import { stripeWebhook } from './controllers/orderController';
 
@@ -50,6 +51,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
