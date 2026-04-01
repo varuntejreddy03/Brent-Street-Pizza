@@ -95,13 +95,14 @@ export default function Menu() {
 
   const handleQuickAdd = (item: MenuItem, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (item.categoryId === 'cat-ice-cream') {
-      // For ice cream, open modal or scroll to builder
-      const builder = document.getElementById('ice-cream-builder');
+    if (item.categoryId === 'cat-ice-cream' && item.name === 'Custom Ice Cream') {
+      // Only for Custom Ice Cream, scroll to builder
+      const builder = document.getElementById('cat-ice-cream');
       if (builder) builder.scrollIntoView({ behavior: 'smooth' });
     } else if (item.sizes && item.sizes.length > 0) {
       setSelectedItem(item);
     } else {
+      // All other items (including non-custom ice cream like Triple Sundae) add to cart directly
       handleAddToCart(item);
     }
   };
