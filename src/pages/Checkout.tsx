@@ -652,7 +652,7 @@ export default function Checkout() {
                       <p className="font-inter text-[10px] text-[#C8201A]">No {item.removedToppings.join(', ')}</p>
                     )}
                     {item.addedExtras && item.addedExtras.length > 0 && (
-                      <p className="font-inter text-[10px] text-[#D4952A]">+ {item.addedExtras.map(e => e.name).join(', ')}</p>
+                      <p className="font-inter text-[10px] text-[#D4952A]">+ {item.addedExtras.map((e: any) => e.name).join(', ')}</p>
                     )}
                   </div>
                   <span className="font-barlow font-700 text-[13px] text-[#1A1A1A] flex-shrink-0">
