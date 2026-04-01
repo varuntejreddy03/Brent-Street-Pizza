@@ -645,22 +645,30 @@ const UI_CONTENT = [
     key: 'specials',
     value: JSON.stringify([
       {
+        id: 'triple-sundae',
+        name: 'Triple Sundae',
+        price: 10,
+        image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80',
+        includes: ['Choose 3 Flavours', 'Choose Toppings (+75c each)', 'Choose Sauce (Free)']
+      },
+      {
         id: 'banana-split',
         name: 'Banana Split',
-        price: '$12',
+        price: 12,
         image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80',
         includes: ['3 Scoops Ice Cream', 'Fresh Banana', 'Whipped Cream', 'Sprinkles', 'Choice of Sauce']
       },
       {
-        id: 'triple-sundae',
-        name: 'Triple Sundae',
-        price: '$10',
-        image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80',
-        includes: ['Choose 3 Flavours', 'Choose Toppings (+75c each)', 'Choose Sauce (Free)']
+        id: 'custom',
+        name: 'Custom Ice Cream',
+        price: 4,
+        image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=80',
+        includes: ['Choose 1-3 Scoops', 'Choose Flavours', 'Choose Toppings (+75c each)', 'Choose Sauce (Free)']
       }
     ]),
     type: 'json'
   },
+
 
   // Menu Page
   { section: 'menu', key: 'title', value: 'OUR MENU', type: 'string' },

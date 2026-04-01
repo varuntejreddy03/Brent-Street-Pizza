@@ -95,14 +95,11 @@ export default function Menu() {
 
   const handleQuickAdd = (item: MenuItem, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (item.categoryId === 'cat-ice-cream' && item.name === 'Custom Ice Cream') {
-      // Only for Custom Ice Cream, scroll to builder
-      const builder = document.getElementById('cat-ice-cream');
-      if (builder) builder.scrollIntoView({ behavior: 'smooth' });
-    } else if (item.sizes && item.sizes.length > 0) {
+    if (item.sizes && item.sizes.length > 0) {
+      // Has sizes — open the customization modal
       setSelectedItem(item);
     } else {
-      // All other items (including non-custom ice cream like Triple Sundae) add to cart directly
+      // No sizes (ice cream, desserts, etc.) — add directly
       handleAddToCart(item);
     }
   };
@@ -307,8 +304,19 @@ export default function Menu() {
                   key={item.id} 
                   item={item} 
                   onAddToCart={(it) => {
-                    const p = products.find(prod => prod.name === it.name) || it;
-                    handleAddToCart(p as MenuItem);
+                    // Try match by name first (most reliable), then by partial ID
+                    const p = products.find(prod => prod.name === it.name)
+                      || products.find(prod => prod.id.includes(it.id))
+                      || {
+                          ...it,
+                          id: `ice-cream-${it.id}`,
+                          categoryId: 'cat-ice-cream',
+                          price: Number(String(it.price).replace(/[^0-9.]/g, '')) || it.price,
+                        };
+                    handleAddToCart(p as MenuItem, {
+                      price: Number(String(p.price).replace(/[^0-9.]/g, '')) || Number(p.price),
+                      quantity: 1
+                    });
                   }} 
                 />
               ))}
