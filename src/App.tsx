@@ -43,16 +43,18 @@ export default function App() {
         <MenuProvider>
           <CartProvider>
             <Routes>
-              {/* Admin Routes - Priority */}
+              {/* Admin Routes - Strict Priority */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<DashboardOverview />} />
                 <Route path="orders" element={<OrdersManager />} />
                 <Route path="products" element={<ProductManager />} />
                 <Route path="content" element={<ContentManager />} />
+                {/* Fallback for admin sub-routes */}
+                <Route path="*" element={<DashboardOverview />} />
               </Route>
 
-              {/* Public Sub-routing */}
+              {/* Public Routes - Catches everything else */}
               <Route path="/" element={<PublicLayout />}>
                 <Route index element={<Home />} />
                 <Route path="menu" element={<Menu />} />
@@ -61,6 +63,8 @@ export default function App() {
                 <Route path="about" element={<About />} />
                 <Route path="deals" element={<Deals />} />
                 <Route path="ice-cream" element={<IceCream />} />
+                {/* 404 handler within public layout if needed */}
+                <Route path="*" element={<Home />} />
               </Route>
             </Routes>
           </CartProvider>
