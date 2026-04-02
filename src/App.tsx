@@ -37,16 +37,17 @@ function PublicLayout() {
 }
 
 export default function App() {
-  console.log("App Version: 1.0.6 - Final Production Routing");
+  console.log("App Version: 1.0.7 - Production Path Debugging");
+  console.log("Current Pathname:", window.location.pathname);
   return (
     <Router>
       <ContentProvider>
         <MenuProvider>
           <CartProvider>
             <Routes>
-              {/* 1. Admin Routes */}
+              {/* 1. Admin Area */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminLayout />}>
+              <Route path="/admin/*" element={<AdminLayout />}>
                 <Route index element={<DashboardOverview />} />
                 <Route path="orders" element={<OrdersManager />} />
                 <Route path="products" element={<ProductManager />} />
