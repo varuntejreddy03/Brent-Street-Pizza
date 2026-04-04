@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Check, ShoppingBag } from 'lucide-react';
+import { calculateItemPrice } from '../utils/pricing';
 
 interface Props {
   scoops: any[];
@@ -31,7 +32,9 @@ const IceCreamBuilder: React.FC<Props> = ({
     : 0;
 
   const total = selectedScoop !== null && scoops[selectedScoop]
-    ? scoops[selectedScoop].price + selectedToppings.length * 0.75
+    ? calculateItemPrice({ id: 'ice-cream-custom', price: scoops[selectedScoop].price } as any, { 
+        toppingsCount: selectedToppings.length 
+      })
     : 0;
 
   useEffect(() => {

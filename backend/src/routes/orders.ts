@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { placeOrder, getOrders } from '../controllers/orderController';
+import { placeOrder, getOrders, updatePaymentStatus } from '../controllers/orderController';
 import { requireAuth } from '../middleware/auth';
 
 const router = Router();
@@ -8,6 +8,6 @@ router.use(requireAuth);
 
 router.get('/', getOrders);
 router.post('/', placeOrder);
-// router.post('/verify-payment', verifyPayment); // Removed for Stripe migration
+router.post('/update-payment-status', updatePaymentStatus);
 
 export default router;

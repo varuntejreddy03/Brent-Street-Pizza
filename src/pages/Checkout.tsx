@@ -11,7 +11,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import StripePaymentForm from '../components/StripePaymentForm';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const STRIPE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+if (!STRIPE_KEY) {
+  console.warn('VITE_STRIPE_PUBLISHABLE_KEY is missing from .env');
+}
+const stripePromise = STRIPE_KEY ? loadStripe(STRIPE_KEY) : null;
 
 type Step = 'address' | 'payment' | 'success';
 
@@ -602,19 +606,26 @@ export default function Checkout() {
                     <CreditCard className="w-4 h-4 text-[#C8201A]" />
                     Complete Your Secure Payment
                   </p>
-                  <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
-                    <StripePaymentForm 
-                      clientSecret={clientSecret} 
-                      total={total}
-                      onSuccess={async () => {
-                        setFinalOrderItems([...cartItems]);
-                        setFinalTotal(total);
-                        await clearCart();
-                        setStep('success');
-                      }}
-                      onCancel={() => setClientSecret('')}
-                    />
-                  </Elements>
+                  {stripePromise ? (
+                    <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
+                      <StripePaymentForm 
+                        orderId={orderId}
+                        clientSecret={clientSecret} 
+                        total={total}
+                        onSuccess={async () => {
+                          setFinalOrderItems([...cartItems]);
+                          setFinalTotal(total);
+                          await clearCart();
+                          setStep('success');
+                        }}
+                        onCancel={() => setClientSecret('')}
+                      />
+                    </Elements>
+                  ) : (
+                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-[13px]">
+                      Stripe configuration missing. Please ensure VITE_STRIPE_PUBLISHABLE_KEY is set in your .env file.
+                    </div>
+                  )}
                 </div>
               ) : (
                 <button

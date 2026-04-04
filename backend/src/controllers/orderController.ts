@@ -78,15 +78,16 @@ export const placeOrder = async (req: AuthRequest, res: Response): Promise<void>
     if (paymentMethod === 'ONLINE') {
       try {
         const paymentIntent = await stripe.paymentIntents.create({
-          amount: Math.round(totalAmount * 100),
-          currency: 'aud', // Pizzas are Australian-based
+          amount: Math.round(Number(totalAmount) * 100),
+          currency: 'aud',
           metadata: {
             orderId: order.id,
             userId: userId
           }
         });
 
-        await (prisma.payment as any).create({
+        // Use standard Prisma access
+        await prisma.payment.create({
           data: {
             orderId: order.id,
             provider: 'Stripe',
@@ -172,5 +173,33 @@ export const getOrders = async (req: AuthRequest, res: Response): Promise<void> 
     res.status(200).json({ orders });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error fetching orders' });
+  }
+};
+
+export const updatePaymentStatus = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { orderId, status } = req.body;
+    
+    if (!orderId || !status) {
+      res.status(400).json({ error: 'OrderId and status are required' });
+      return;
+    }
+
+    // Securely update order and payment status
+    await prisma.$transaction([
+      prisma.order.update({
+        where: { id: orderId },
+        data: { paymentStatus: status }
+      }),
+      (prisma.payment as any).updateMany({
+        where: { orderId: orderId },
+        data: { status: status === 'Paid' ? 'Success' : status }
+      })
+    ]);
+
+    res.json({ message: 'Order payment status updated successfully' });
+  } catch (err) {
+    console.error('updatePaymentStatus error:', err);
+    res.status(500).json({ error: 'Failed to update payment status' });
   }
 };

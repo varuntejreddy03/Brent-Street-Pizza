@@ -4,8 +4,10 @@ import { RefreshCw, Save, ImageIcon, Type } from 'lucide-react';
 
 export default function ContentManager() {
   const [contentItems, setContentItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingSection, setSavingSection] = useState<string | null>(null);
+  const [savingCategory, setSavingCategory] = useState<string | null>(null);
   
   // Grouped content: { [section]: [{ key, value, type }, ...] }
   const [groupedContent, setGroupedContent] = useState<Record<string, any[]>>({});
@@ -27,6 +29,15 @@ export default function ContentManager() {
           return acc;
         }, {});
         setGroupedContent(grouped);
+      }
+
+      // Fetch Categories
+      const catRes = await fetch(`${API_URL}/api/admin/categories`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (catRes.ok) {
+        const catData = await catRes.json();
+        setCategories(catData);
       }
     } catch (err) {
       console.error(err);
@@ -80,6 +91,28 @@ export default function ContentManager() {
     }
   };
 
+  const handleToggleCategory = async (id: string, currentStatus: boolean) => {
+    setSavingCategory(id);
+    try {
+      const token = localStorage.getItem('adminToken');
+      const res = await fetch(`${API_URL}/api/admin/categories/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ isActive: !currentStatus })
+      });
+      if (res.ok) {
+        setCategories(prev => prev.map(c => c.id === id ? { ...c, isActive: !currentStatus } : c));
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSavingCategory(null);
+    }
+  };
+
   if (loading) return <div className="p-12 text-center animate-spin text-[#C8201A]"><RefreshCw className="w-8 h-8 mx-auto" /></div>;
 
   return (
@@ -96,6 +129,37 @@ export default function ContentManager() {
       </div>
 
       <div className="space-y-8">
+        {/* Category Management */}
+        <div className="bg-white border border-[#E8D8C8] rounded-2xl overflow-hidden shadow-sm mb-8">
+          <div className="bg-[#1A1A1A] p-5">
+            <h3 className="font-bebas text-[24px] tracking-widest text-white uppercase leading-none mt-1">
+              Storefront Categories
+            </h3>
+          </div>
+          <div className="p-6 bg-[#FDFAF6]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {categories.map(cat => (
+                <div key={cat.id} className="bg-white border border-[#E8D8C8] p-4 rounded-xl flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="font-barlow text-[13px] font-700 uppercase tracking-widest text-[#1A1A1A]">
+                      {cat.name}
+                    </span>
+                    <span className="font-inter text-[11px] text-[#888888]">
+                      {cat.isActive ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleToggleCategory(cat.id, cat.isActive)}
+                    disabled={savingCategory === cat.id}
+                    className={`w-12 h-6 rounded-full transition-colors duration-200 relative ${cat.isActive ? 'bg-emerald-500' : 'bg-gray-300'}`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all duration-200 ${cat.isActive ? 'right-1' : 'left-1'}`} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         {Object.entries(groupedContent).map(([section, items]) => (
           <div key={section} className="bg-white border border-[#E8D8C8] rounded-2xl overflow-hidden shadow-sm">
             <div className="bg-[#1A1A1A] p-5 flex items-center justify-between">

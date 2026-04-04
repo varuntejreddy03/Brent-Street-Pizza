@@ -708,7 +708,8 @@ async function main() {
       create: {
         id: cat.id,
         name: cat.name,
-        iconName: cat.iconName
+        iconName: cat.iconName,
+        isActive: true
       }
     });
   }
@@ -747,6 +748,7 @@ async function main() {
         hasPizzaExtras: item.hasPizzaExtras ?? false,
         rating: item.rating ?? null,
         isFavorite: item.tags?.isFavorite || false,
+        isActive: true,
       },
       create: {
         id: item.id,
@@ -761,6 +763,7 @@ async function main() {
         hasPizzaExtras: item.hasPizzaExtras ?? false,
         rating: item.rating ?? null,
         isFavorite: item.tags?.isFavorite || false,
+        isActive: true,
       }
     });
   }

@@ -182,3 +182,81 @@ export const updateContentAdmin = async (req: Request, res: Response): Promise<v
     res.status(500).json({ error: 'Error updating content' });
   }
 };
+
+export const getCategoriesAdmin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const categories = await prisma.category.findMany({
+      orderBy: { name: 'asc' }
+    });
+    res.json(categories);
+  } catch (error) {
+    console.error('getCategoriesAdmin error:', error);
+    res.status(500).json({ error: 'Error fetching categories' });
+  }
+};
+
+export const createCategoryAdmin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id, name, description, isActive } = req.body;
+    if (!id || !name) {
+      res.status(400).json({ error: 'ID and Name are required' });
+      return;
+    }
+    const category = await prisma.category.create({
+      data: { id, name, description, isActive: isActive ?? true }
+    });
+    res.status(201).json(category);
+  } catch (error: any) {
+    console.error('createCategoryAdmin error:', error);
+    res.status(500).json({ error: error.message || 'Error creating category' });
+  }
+};
+
+export const updateCategoryAdmin = async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id as string;
+  try {
+    const category = await prisma.category.update({
+      where: { id },
+      data: req.body
+    });
+    res.json(category);
+  } catch (error: any) {
+    console.error('updateCategoryAdmin error:', error);
+    res.status(500).json({ error: error.message || 'Error updating category' });
+  }
+};
+
+export const deleteCategoryAdmin = async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id as string;
+  try {
+    await prisma.category.delete({ where: { id } });
+    res.json({ message: 'Category deleted' });
+  } catch (error: any) {
+    console.error('deleteCategoryAdmin error:', error);
+    res.status(500).json({ error: error.message || 'Error deleting category' });
+  }
+};
+
+export const getPizzaExtrasAdmin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const extras = await prisma.pizzaExtra.findMany();
+    res.json(extras);
+  } catch (error) {
+    console.error('getPizzaExtrasAdmin error:', error);
+    res.status(500).json({ error: 'Error fetching pizza extras' });
+  }
+};
+
+export const updatePizzaExtraAdmin = async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id as string;
+  try {
+    const extra = await prisma.pizzaExtra.update({
+      where: { id },
+      data: req.body
+    });
+    res.json(extra);
+  } catch (error: any) {
+    console.error('updatePizzaExtraAdmin error:', error);
+    res.status(500).json({ error: error.message || 'Error updating pizza extra' });
+  }
+};

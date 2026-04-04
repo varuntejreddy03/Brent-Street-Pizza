@@ -25,6 +25,7 @@ model Category {
   id        String    @id
   name      String
   iconName  String
+  isActive  Boolean   @default(true)
   products  Product[]
 }
 
@@ -41,6 +42,7 @@ model Product {
   rating         Decimal?  @db.Decimal(3, 2)
   isFavorite     Boolean   @default(false)
   hasPizzaExtras Boolean   @default(false)
+  isActive       Boolean   @default(true)
   createdAt      DateTime  @default(now())
 
   category       Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -59,6 +61,7 @@ model CartItem {
   userId          String   @db.Uuid
   productId       String
   quantity        Int      @default(1)
+  price           Decimal? @db.Decimal(10, 2)
   size            String?
   removedToppings Json?
   addedExtras     Json?

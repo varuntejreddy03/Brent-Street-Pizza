@@ -78,14 +78,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // 3. addToCart — always updates local state immediately, syncs to DB in background
   const addToCart = async (item: MenuItem, customizations?: { size?: string, price?: number, removedToppings?: string[], addedExtras?: { name: string; price: number }[], quantity?: number }) => {
-    const effectivePrice = customizations?.price ?? Number(item.price);
+    
+    // Ensure we are using the final calculated unit price
+    const unitPrice = Number(customizations?.price || item.price || 0);
     const effectiveSize = customizations?.size ?? (item.sizes?.length ? item.sizes[0].name : undefined);
+
+    console.log(`[Cart] Adding ${item.name}:`, {
+      originalPrice: item.price,
+      customizedUnitPrice: unitPrice,
+      quantity: customizations?.quantity || 1,
+      total: unitPrice * (customizations?.quantity || 1)
+    });
 
     const localItem: CartItem = {
       id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
-      menuItemId: item.id,   // ← real DB product ID (e.g. 'pizza-margherita')
+      menuItemId: item.id,
       name: item.name,
-      price: effectivePrice,
+      price: unitPrice,
       quantity: customizations?.quantity || 1,
       image: item.image,
       size: effectiveSize,
@@ -99,16 +108,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Background DB sync — best effort
     if (token) {
       try {
+        const payload = {
+          menuItemId: item.id,
+          quantity: localItem.quantity,
+          price: localItem.price,
+          size: localItem.size || null,
+          removedToppings: localItem.removedToppings || [],
+          addedExtras: localItem.addedExtras || []
+        };
+        
+        console.log('[Cart] Syncing to DB:', payload);
+
         const res = await fetch(`${API_URL}/api/cart`, {
           method: 'POST',
           headers: authHeaders(),
-          body: JSON.stringify({
-            menuItemId: item.id,
-            quantity: localItem.quantity,
-            size: localItem.size || 'Large',
-            removedToppings: localItem.removedToppings || [],
-            addedExtras: localItem.addedExtras || []
-          })
+          body: JSON.stringify(payload)
         });
 
         if (res.ok) {

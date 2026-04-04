@@ -15,8 +15,8 @@ export const getCart = async (req: AuthRequest, res: Response): Promise<void> =>
       id: item.id,
       menuItemId: item.productId,
       name: item.product.name,
-      price: Number(item.product.price),
-      quantity: item.quantity,
+      price: item.price ? Number(item.price) : Number(item.product.price || 0),
+      quantity: Number(item.quantity || 1),
       image: item.product.image,
       size: item.size,
       removedToppings: item.removedToppings,
@@ -33,7 +33,7 @@ export const getCart = async (req: AuthRequest, res: Response): Promise<void> =>
 export const addToCart = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user.id;
-    const { menuItemId, quantity = 1, size, removedToppings, addedExtras } = req.body;
+    const { menuItemId, quantity = 1, size, price, removedToppings, addedExtras } = req.body;
 
     if (!menuItemId) {
       res.status(400).json({ error: 'menuItemId is required' });
@@ -44,8 +44,9 @@ export const addToCart = async (req: AuthRequest, res: Response): Promise<void> 
       data: {
         userId,
         productId: menuItemId,
-        quantity,
-        size,
+        quantity: Number(quantity || 1),
+        price: price ? Number(price) : null,
+        size: size || null,
         removedToppings: removedToppings || [],
         addedExtras: addedExtras || []
       }

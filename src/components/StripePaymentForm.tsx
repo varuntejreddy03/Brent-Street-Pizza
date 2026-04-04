@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { API_URL } from '../config/api';
 
 interface StripePaymentFormProps {
+  orderId: string;
   clientSecret: string;
   onSuccess: () => void;
   onCancel: () => void;
   total: number;
 }
 
-const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ clientSecret, onSuccess, onCancel, total }) => {
+const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ orderId, clientSecret, onSuccess, onCancel, total }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
@@ -34,6 +36,20 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ clientSecret, onS
       setProcessing(false);
     } else {
       if (result.paymentIntent.status === 'succeeded') {
+        // Sync payment status to backend
+        try {
+          const token = localStorage.getItem('token');
+          await fetch(`${API_URL}/api/orders/update-payment-status`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ orderId, status: 'Paid' })
+          });
+        } catch (err) {
+          console.error('Failed to sync payment status:', err);
+        }
         onSuccess();
       }
     }

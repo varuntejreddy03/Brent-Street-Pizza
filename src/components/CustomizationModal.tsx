@@ -7,6 +7,7 @@ import { type MenuItem } from '../types/menu';
 import { useMenu } from '../context/MenuContext';
 import { useSectionContent } from '../context/ContentContext';
 import IceCreamBuilder from './IceCreamBuilder';
+import { calculateItemPrice } from '../utils/pricing';
 
 interface Props {
   item: MenuItem | null;
@@ -75,12 +76,29 @@ const CustomizationModal: React.FC<Props> = ({
 
   if (!isOpen || !item) return null;
 
-  // ── Derived values ──────────────────────────────────────────────────────────
-  const sizeObj = item.sizes?.find(s => s.name === selectedSize);
-  const basePrice = Number(sizeObj?.price ?? item.price);
+  // For Ice Cream, we derive the base price from the builder's current state (Scoop price)
+  // If builder state is not yet available, fallback to the product's base price
+  const currentIcPrice = Number(icCustoms?.price || item.price || 0);
+  const icToppingsCount = Number(icCustoms?.toppings?.length || 0);
+  const icBasePrice = item.categoryId === 'cat-ice-cream' 
+    ? (currentIcPrice - icToppingsCount * 0.75) 
+    : 0;
+
+  const basePrice = item.categoryId === 'cat-ice-cream' 
+    ? (currentIcPrice || Number(item.price))
+    : Number(item.sizes?.find(s => s.name === selectedSize)?.price ?? item.price);
+
   let extrasTotal = 0;
   addedExtras.forEach(e => { extrasTotal += Number(e.price); });
-  const orderTotal = (basePrice + extrasTotal) * quantity;
+
+  const orderTotal = calculateItemPrice(item, {
+    size: selectedSize,
+    basePriceOverride: item.categoryId === 'cat-ice-cream' ? icBasePrice : undefined,
+    addedExtras: Array.from(addedExtras.values()),
+    quantity: item.categoryId === 'cat-ice-cream' ? 1 : quantity,
+    toppingsCount: item.categoryId === 'cat-ice-cream' ? icToppingsCount : 0
+  }) * (item.categoryId === 'cat-ice-cream' ? 1 : quantity);
+
   const rating = RATINGS[item.id] ?? 4.8;
   const pizzaExtras = item.hasPizzaExtras ? menuExtras : [];
 
@@ -101,12 +119,13 @@ const CustomizationModal: React.FC<Props> = ({
     if (item.categoryId === 'cat-ice-cream') {
       onAddToCart(item, {
         ...icCustoms,
+        price: icCustoms?.price || (orderTotal / quantity),
         quantity,
       });
     } else {
       onAddToCart(item, {
         size: selectedSize || undefined,
-        price: basePrice,
+        price: orderTotal / quantity, // Store unit price with customizations
         removedToppings: Array.from(removedToppings),
         addedExtras: Array.from(addedExtras.values()),
         quantity,

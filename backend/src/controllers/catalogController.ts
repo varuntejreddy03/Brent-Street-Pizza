@@ -3,7 +3,12 @@ import prisma from '../config/db';
 
 export const getCategories = async (req: Request, res: Response): Promise<void> => {
   try {
-    const categories = await prisma.category.findMany();
+    const showInactive = req.query.showInactive === 'true';
+    const whereClause: any = {};
+    if (!showInactive) {
+      whereClause.isActive = true;
+    }
+    const categories = await prisma.category.findMany({ where: whereClause });
     res.status(200).json({ categories });
   } catch (err: any) {
     console.error('Error fetching categories:', err);
@@ -22,6 +27,12 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
     
     if (isFavorite === 'true') {
       whereClause.isFavorite = true;
+    }
+
+    // Default: hide inactive. Only show if showInactive=true (for Admin)
+    const showInactive = req.query.showInactive === 'true';
+    if (!showInactive) {
+      whereClause.isActive = true;
     }
 
     const products = await prisma.product.findMany({ where: whereClause });

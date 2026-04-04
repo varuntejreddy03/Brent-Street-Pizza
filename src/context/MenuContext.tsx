@@ -7,6 +7,7 @@ interface MenuContextType {
   menuItems: MenuItem[];
   extras: ExtraCategory[];
   isLoading: boolean;
+  refreshMenu: (showInactive?: boolean) => Promise<void>;
 }
 
 const MenuContext = createContext<MenuContextType | undefined>(undefined);
@@ -17,14 +18,14 @@ export const MenuProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [extras, setExtrasState] = useState<ExtraCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchCatalog = useCallback(async () => {
+  const fetchCatalog = useCallback(async (showInactive = false) => {
     try {
       setIsLoading(true);
 
-      // Run all three fetches in parallel for speed
+      const query = showInactive ? '?showInactive=true' : '';
       const [catRes, prodRes, extrasRes] = await Promise.all([
-        fetch(`${API_URL}/api/catalog/categories`),
-        fetch(`${API_URL}/api/catalog/products`),
+        fetch(`${API_URL}/api/catalog/categories${query}`),
+        fetch(`${API_URL}/api/catalog/products${query}`),
         fetch(`${API_URL}/api/catalog/pizza-extras`),
       ]);
 
@@ -34,26 +35,12 @@ export const MenuProvider: React.FC<{ children: React.ReactNode }> = ({ children
         extrasRes.json(),
       ]);
 
-      if (catData.categories?.length) setCategories(catData.categories);
-      if (prodData.products?.length) setMenuItems(prodData.products);
-      if (extrasData.pizza_extras?.length) setExtrasState(extrasData.pizza_extras);
+      if (catData.categories) setCategories(catData.categories);
+      if (prodData.products) setMenuItems(prodData.products);
+      if (extrasData.pizza_extras) setExtrasState(extrasData.pizza_extras);
 
     } catch (err) {
       console.error('Failed to load menu data from backend:', err);
-      // Retry once after 2 seconds if initial fetch failed
-      setTimeout(async () => {
-        try {
-          const [catRes, prodRes] = await Promise.all([
-            fetch(`${API_URL}/api/catalog/categories`),
-            fetch(`${API_URL}/api/catalog/products`),
-          ]);
-          const [catData, prodData] = await Promise.all([catRes.json(), prodRes.json()]);
-          if (catData.categories?.length) setCategories(catData.categories);
-          if (prodData.products?.length) setMenuItems(prodData.products);
-        } catch (retryErr) {
-          console.error('Retry also failed:', retryErr);
-        }
-      }, 2000);
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +51,7 @@ export const MenuProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [fetchCatalog]);
 
   return (
-    <MenuContext.Provider value={{ categories, menuItems, extras, isLoading }}>
+    <MenuContext.Provider value={{ categories, menuItems, extras, isLoading, refreshMenu: fetchCatalog }}>
       {children}
     </MenuContext.Provider>
   );

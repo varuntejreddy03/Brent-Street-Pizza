@@ -26,12 +26,14 @@ export interface MenuItem {
   toppings?: string[];
   isFavorite?: boolean;
   hasPizzaExtras?: boolean;
+  isActive?: boolean;
 }
 
 export interface MenuCategory {
   id: string;
   name: string;
   iconName: string; // We'll map this to Lucide icons in the component
+  isActive?: boolean;
 }
 
 export interface CartItem {

@@ -10,7 +10,13 @@ import {
   updateProductAdmin,
   deleteProductAdmin,
   getAllContentAdmin,
-  updateContentAdmin
+  updateContentAdmin,
+  getCategoriesAdmin,
+  createCategoryAdmin,
+  updateCategoryAdmin,
+  deleteCategoryAdmin,
+  getPizzaExtrasAdmin,
+  updatePizzaExtraAdmin
 } from '../controllers/adminController';
 
 const router = Router();
@@ -35,5 +41,15 @@ router.delete('/products/:id', deleteProductAdmin);
 // Content
 router.get('/content', getAllContentAdmin);
 router.put('/content', updateContentAdmin);
+
+// Categories
+router.get('/categories', getCategoriesAdmin);
+router.post('/categories', createCategoryAdmin);
+router.put('/categories/:id', updateCategoryAdmin);
+router.delete('/categories/:id', deleteCategoryAdmin);
+
+// Pizza Extras
+router.get('/pizza-extras', getPizzaExtrasAdmin);
+router.put('/pizza-extras/:id', updatePizzaExtraAdmin);
 
 export default router;

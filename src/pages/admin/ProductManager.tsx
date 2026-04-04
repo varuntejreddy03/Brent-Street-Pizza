@@ -18,6 +18,7 @@ export default function ProductManager() {
     image: '',
     hasPizzaExtras: false,
     isFavorite: false,
+    isActive: true,
   });
 
   const fetchProducts = async () => {
@@ -57,6 +58,7 @@ export default function ProductManager() {
         image: product.image,
         hasPizzaExtras: product.hasPizzaExtras || false,
         isFavorite: product.isFavorite || false,
+        isActive: product.isActive !== undefined ? product.isActive : true,
       });
     } else {
       setEditingProduct(null);
@@ -69,6 +71,7 @@ export default function ProductManager() {
         image: '',
         hasPizzaExtras: false,
         isFavorite: false,
+        isActive: true,
       });
     }
     setIsModalOpen(true);
@@ -156,8 +159,15 @@ export default function ProductManager() {
                   Popular
                 </div>
               )}
-              <div className="absolute bottom-3 left-3 bg-[#1A1A1A]/80 backdrop-blur-sm text-white font-barlow text-[10px] font-700 uppercase tracking-widest px-2.5 py-1 rounded">
-                {product.category?.name || product.categoryId}
+              <div className="absolute bottom-3 left-3 flex gap-1.5">
+                <div className="bg-[#1A1A1A]/80 backdrop-blur-sm text-white font-barlow text-[10px] font-700 uppercase tracking-widest px-2.5 py-1 rounded">
+                  {product.category?.name || product.categoryId}
+                </div>
+                {product.isActive === false && (
+                  <div className="bg-red-600 text-white font-barlow text-[10px] font-700 uppercase tracking-widest px-2.5 py-1 rounded">
+                    Inactive
+                  </div>
+                )}
               </div>
             </div>
             
@@ -291,6 +301,15 @@ export default function ProductManager() {
                     className="w-4 h-4 text-[#D4952A] rounded border-[#E8D8C8] focus:ring-[#D4952A]"
                   />
                   <span className="font-barlow text-[13px] font-700 uppercase tracking-widest text-[#555] group-hover:text-[#1A1A1A]">Mark as Popular</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <input 
+                    type="checkbox" 
+                    checked={formData.isActive} 
+                    onChange={e => setFormData({ ...formData, isActive: e.target.checked })}
+                    className="w-4 h-4 text-emerald-600 rounded border-[#E8D8C8] focus:ring-emerald-600"
+                  />
+                  <span className="font-barlow text-[13px] font-700 uppercase tracking-widest text-[#555] group-hover:text-[#1A1A1A]">Active on Frontend</span>
                 </label>
               </div>
 

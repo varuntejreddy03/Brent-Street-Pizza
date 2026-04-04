@@ -22,6 +22,8 @@ import DashboardOverview from './pages/admin/DashboardOverview';
 import OrdersManager from './pages/admin/OrdersManager';
 import ProductManager from './pages/admin/ProductManager';
 import ContentManager from './pages/admin/ContentManager';
+import CustomizationManager from './pages/admin/CustomizationManager';
+import CategoryManager from './components/admin/CategoryManager';
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('adminToken');
@@ -98,6 +100,8 @@ export default function App() {
                   <Route path="orders" element={<OrdersManager />} />
                   <Route path="products" element={<ProductManager />} />
                   <Route path="content" element={<ContentManager />} />
+                  <Route path="categories" element={<CategoryManager />} />
+                  <Route path="customizations" element={<CustomizationManager />} />
                 </Route>
                 <Route
                   path="*"

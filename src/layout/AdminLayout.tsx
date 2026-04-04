@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import { 
   LayoutDashboard, ShoppingBag, Pizza, Image as ImageIcon, 
-  LogOut, ShieldAlert, ChevronRight, Menu as MenuIcon, X
+  LogOut, ShieldAlert, ChevronRight, Menu as MenuIcon, X, Sliders, Layout
 } from 'lucide-react';
 
 export default function AdminLayout() {
@@ -55,6 +55,8 @@ export default function AdminLayout() {
     { name: 'Orders Manager', path: '/admin/orders', icon: ShoppingBag },
     { name: 'Product Catalog', path: '/admin/products', icon: Pizza },
     { name: 'App Content', path: '/admin/content', icon: ImageIcon },
+    { name: 'Categories', path: '/admin/categories', icon: Layout },
+    { name: 'Customizations', path: '/admin/customizations', icon: Sliders },
   ];
 
   return (
