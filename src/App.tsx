@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
 import MobileCTABar from './layout/MobileCTABar';
+import GlobalCartWidget from './components/GlobalCartWidget';
+
 import { CartProvider } from './context/CartContext';
 import { MenuProvider } from './context/MenuContext';
 import { ContentProvider } from './context/ContentContext';
@@ -69,6 +71,7 @@ function PublicLayout() {
       </main>
       <Footer />
       <MobileCTABar />
+      <GlobalCartWidget />
     </div>
   );
 }

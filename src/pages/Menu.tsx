@@ -3,7 +3,6 @@ import { ShoppingCart, Phone, ArrowRight, Plus, Check } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useMenu } from '../context/MenuContext';
 import { useCart } from '../context/CartContext';
-import CartWidget from '../components/CartWidget';
 import CustomizationModal from '../components/CustomizationModal';
 import { type MenuItem } from '../types/menu';
 import { useSectionContent } from '../context/ContentContext';
@@ -14,14 +13,12 @@ import SpecialIceCreamCard from '../components/SpecialIceCreamCard';
 
 export default function Menu() {
   const { menuItems: products, categories, isLoading: menuLoading } = useMenu();
-  const { addToCart, cartTotalItems, cartTotalPrice, cartItems, incrementItem, decrementItem } = useCart();
+  const { addToCart, cartTotalItems, cartTotalPrice, cartItems, incrementItem, decrementItem, setIsCartOpen } = useCart();
   const { sectionContent: icContent, loading: icLoading } = useSectionContent('icecream');
   const { sectionContent: menuContent, loading: menuContentLoading } = useSectionContent('menu');
   const { sectionContent: globalContent } = useSectionContent('global');
   
   const [activeCategory, setActiveCategory] = useState<string>('cat-classic-pizza');
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [orderType, setOrderType] = useState<'pickup' | 'delivery'>('pickup');
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
   const [preselectedSize, setPreselectedSize] = useState<string | undefined>(undefined);
@@ -353,28 +350,7 @@ export default function Menu() {
         onAddToCart={handleAddToCart}
       />
 
-      {/* ── Mobile sticky bottom bar ────────────────────────────────────── */}
-      {cartTotalItems > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-[#FDF8F2]/98 backdrop-blur-xl border-t border-[#E8D8C8] px-4 py-3 safe-area-bottom">
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="w-full flex items-center justify-between bg-[#C8201A] hover:bg-[#9E1510] text-[#FFFCF7] font-barlow font-700 text-[14px] uppercase tracking-wider px-5 py-3.5 rounded-xl transition-all shadow-[0_8px_24px_rgba(200, 32, 26,0.45)]"
-          >
-            <span className="flex items-center gap-2.5">
-              <span className="bg-white text-[#C8201A] text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center">
-                {cartTotalItems}
-              </span>
-              View Order
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="font-bebas text-[20px] leading-none">${cartTotalPrice.toFixed(2)}</span>
-              <ArrowRight className="w-4 h-4" />
-            </span>
-          </button>
-        </div>
-      )}
-
-      {/* ── Floating cart trigger ── */}
+      {/* ── Floating cart trigger (Desktop/Tablet) ── */}
       <button
         onClick={() => setIsCartOpen(true)}
         className="fixed bottom-10 right-8 w-14 h-14 bg-[#1A1A1A] rounded-full shadow-2xl flex items-center justify-center z-40
@@ -387,16 +363,6 @@ export default function Menu() {
           </span>
         )}
       </button>
-
-      <CartWidget 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
-        items={cartItems}
-        orderType={orderType}
-        onOrderTypeChange={setOrderType}
-        onIncrement={incrementItem}
-        onDecrement={decrementItem}
-      />
     </div>
   );
 }

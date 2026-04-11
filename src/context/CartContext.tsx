@@ -11,6 +11,10 @@ interface CartContextType {
   clearCart: () => void;
   cartTotalItems: number;
   cartTotalPrice: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
+  orderType: 'pickup' | 'delivery';
+  setOrderType: (t: 'pickup' | 'delivery') => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -37,6 +41,8 @@ const createGuestUser = async (): Promise<string | null> => {
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [orderType, setOrderType] = useState<'pickup' | 'delivery'>('pickup');
 
   // 1. On mount: validate existing token, or create guest
   useEffect(() => {
@@ -186,7 +192,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       decrementItem,
       clearCart,
       cartTotalItems,
-      cartTotalPrice
+      cartTotalPrice,
+      isCartOpen,
+      setIsCartOpen,
+      orderType,
+      setOrderType
     }}>
       {children}
     </CartContext.Provider>
