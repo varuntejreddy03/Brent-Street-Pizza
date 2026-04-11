@@ -176,14 +176,6 @@ export default function InvoicesManager() {
       {/* Printable Area - Hidden on screen, shown when printing */}
       <div className="hidden print:block font-sans text-black w-full max-w-full">
         {printOrders.map((order, idx) => {
-          // Parse out date/time for ticket format
-          const date = new Date(order.createdAt);
-          const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-          const formattedTimePlaced = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-          // Let's assume due time is roughly 30 mins after placed as a placeholder, unless delivery info exists
-          const dateDue = new Date(date.getTime() + 30 * 60000);
-          const formattedTimeDue = dateDue.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-
           const customerCode = order.id.slice(0, 5).toUpperCase(); // Short code for the user
 
           return (
@@ -196,17 +188,14 @@ export default function InvoicesManager() {
 
               {/* Customer ID Banner */}
               <div className="bg-black text-white px-2 py-1.5 flex justify-between items-center font-bold text-[22px] tracking-wide mb-3">
-                <span className="truncate max-w-[65%]">
+                <span className="flex-1">
                   {order.customerName || (order.user?.name?.toLowerCase() === 'guest' ? `Guest (#${order.id.slice(0, 5).toUpperCase()})` : order.user?.name)}
                 </span>
-                <span>{customerCode}</span>
+                <span className="ml-2 shrink-0">{customerCode}</span>
               </div>
 
-              <div className="mb-4 text-[13px] font-medium leading-tight border-b-2 border-black pb-4">
-                <p>New customer</p>
-                <p>Phone: {order.customerPhone || order.user?.phone || 'N/A'}</p>
-                <p>Address: {order.deliveryAddress || 'Pickup'}</p>
-                <p className="mt-1 text-[11px] text-gray-600">Disposable items: No</p>
+              <div className="mb-4 text-[15px] font-bold leading-tight border-b-2 border-black pb-4">
+                <p>PHONE: {order.customerPhone || order.user?.phone || 'N/A'}</p>
               </div>
 
               {/* Items List */}
@@ -263,15 +252,7 @@ export default function InvoicesManager() {
                 </div>
               </div>
 
-              {/* Timestamp Section */}
-              <div className="mt-4 text-[13px] font-medium border-b-2 border-black pb-4">
-                <div className="flex justify-between">
-                  <span>Placed at {formattedDate}, {formattedTimePlaced}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Due at {formattedDate}, {formattedTimeDue}</span>
-                </div>
-              </div>
+
 
               {/* Footer */}
               <div className="mt-4 text-center text-[12px] font-medium italic px-4 pb-8">
