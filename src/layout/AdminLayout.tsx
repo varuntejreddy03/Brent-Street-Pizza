@@ -152,7 +152,8 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 max-h-screen overflow-y-auto">
+      {/* <main className="flex-1 flex flex-col min-w-0 max-h-screen overflow-y-auto"> */}
+      <main className="flex-1 flex flex-col min-w-0 max-h-screen overflow-y-auto print:max-h-none print:overflow-visible print:block">
         {/* Mobile Header */}
         <div className="lg:hidden sticky top-0 z-30 bg-[#1A1A1A] text-white p-4 flex items-center justify-between shadow-md">
           <h1 className="font-bebas text-[24px] tracking-wider text-[#D4952A] leading-none mt-1">
