@@ -460,3 +460,14 @@
 .group:hover .group-hover\:scale-108 {
   transform: scale(1.08);
 }
+
+/* ---- Print Styles ---- */
+@media print {
+  html, body, #root {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    background-color: white !important;
+  }
+}
